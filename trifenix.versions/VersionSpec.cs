@@ -2,7 +2,7 @@
 
 namespace trifenix.versions
 {
-    public class Class1
+    public class VersionSpec
     {
     }
 }
