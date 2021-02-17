@@ -73,4 +73,10 @@
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\trifenix.versions\trifenix.versions.csproj" />
+  </ItemGroup>
+
+
 </Project>
