@@ -39,8 +39,8 @@ steps:
       command: pack
       packagesToPack: '**/$(name-project).csproj'       
       arguments: '--configuration $(BuildConfiguration) /p:Version=0.0.1'
-      versioningScheme: byEnvVar 
-      versionEnvVar: SemVer
+      
+      
 
   # publica paquete para publicar.
   - task: PublishBuildArtifacts@1
