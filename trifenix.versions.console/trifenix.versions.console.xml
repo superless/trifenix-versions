@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>trifenix.versions.console</name>
+    </assembly>
+    <members>
+        <member name="T:trifenix.arguments.UpdateVersionArgs">
+            <summary>
+            Argumentos para generar una nueva versión del paquete.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.GitAddress">
+            <summary>
+            github donde se almacenará la estructura de versiones.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.username">
+            <summary>
+            Usuario que registra el cambio en el repositorio del componente
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.email">
+            <summary>
+            correo que registra el cambio en el repositorio del componente
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.branch">
+            <summary>
+            Rama que será sobrescrita en el github
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.Token">
+            <summary>
+            Token del github.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.packageName">
+            <summary>
+            build de azure devops.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.Build">
+            <summary>
+            nombre del paquete a actualizar.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.packageType">
+            <summary>
+            Tipo del paquete
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.UpdateVersionArgs.DependantRelease">
+            <summary>
+            si la rama depende del release, se usará release para la nueva versión, sino la master.
+            </summary>
+        </member>
+        <member name="M:trifenix.arguments.UpdateVersionArgs.ToString">
+            <summary>
+            muestra de valores de la clase
+            </summary>
+            <returns>valores de la clase, solo por debug.</returns>
+        </member>
+        <member name="T:trifenix.versions.console.Program">
+            <summary>
+            # trifenix-versions
+            Aplicación para la actualización de github de paquetes dependientes de una versión
+            y para generar nuevas versiones de acuerdo a la rama.
+            </summary>
+        </member>
+        <member name="M:trifenix.versions.console.Program.Main(System.String[])">
+            <summary>
+            Punto de arranque
+            </summary>
+            <param name="args">usamos CommandLineParser para parsear las opciones</param>
+        </member>
+    </members>
+</doc>
