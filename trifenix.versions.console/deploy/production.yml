@@ -38,7 +38,7 @@ steps:
     inputs: 
       command: pack
       packagesToPack: '**/$(name-project).csproj'       
-      arguments: '--configuration $(BuildConfiguration) /p:Version=0.0.1'
+      arguments: '--configuration $(BuildConfiguration)'
       
       
 
