@@ -8,22 +8,13 @@
         /// <summary>
         /// Rama del commit
         /// </summary>
-        public string branch { get; set; }
+        public string Branch { get; set; }
+
 
         /// <summary>
-        /// Sección Major de la versión semántica
+        /// 
         /// </summary>
-        public int Major { get; set; }
-
-        /// <summary>
-        /// Sección Minor de la versión semántica
-        /// </summary>
-        public int Minor { get; set; }
-
-        /// <summary>
-        /// Sección Patch de la versión semántica
-        /// </summary>
-        public int Patch { get; set; }
+        public Semantic SemanticBaseVersion { get; set; } = new Semantic();
 
         /// <summary>
         /// Label de la versión
@@ -51,8 +42,25 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{Major}.{Minor}.{Patch}.{PreReleaseLabel}.{Preview}";
+            return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}.{PreReleaseLabel}.{Preview}";
         }
+    }
+
+    public class Semantic {
+        /// <summary>
+        /// Sección Major de la versión semántica
+        /// </summary>
+        public int Major { get; set; }
+
+        /// <summary>
+        /// Sección Minor de la versión semántica
+        /// </summary>
+        public int Minor { get; set; }
+
+        /// <summary>
+        /// Sección Patch de la versión semántica
+        /// </summary>
+        public int Patch { get; set; }
     }
 
 

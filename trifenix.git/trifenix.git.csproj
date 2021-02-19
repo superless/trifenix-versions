@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\trifenix.git.interfaces\trifenix.git.interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
