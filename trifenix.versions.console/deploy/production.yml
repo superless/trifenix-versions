@@ -32,7 +32,7 @@ steps:
   - task: DotNetCoreCLI@2
     inputs:
       command: 'restore'
-      projects: '**/*.csproj'
+      projects: '**/$(name-project).csproj'
       feedsToUse: 'select'
       vstsFeed: '$(default-feed)'      
       versioningScheme: byBuildNumber
