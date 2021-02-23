@@ -53,7 +53,15 @@ namespace trifenix.versions.console
         public static void ProgragationMethod(Propagation args) {
             var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email);
 
-            versionSpec.SetVersionToDependant();
+            try
+            {
+                versionSpec.SetVersionToDependant();
+            }
+            catch (Exception ex)
+            {
+                Colorful.Console.WriteLine($"Error en la ejecución {ex.Message}", Color.Red);
+                
+            }
         }
 
 
@@ -62,7 +70,15 @@ namespace trifenix.versions.console
 
             var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email, args.Build);
 
-            var version = versionSpec.SetVersion();
+            try
+            {
+                var version = versionSpec.SetVersion();
+            }
+            catch (Exception ex)
+            {
+
+                Colorful.Console.WriteLine($"Error en la ejecución {ex.Message}", Color.Red);
+            }
 
             System.Console.WriteLine(version);
             

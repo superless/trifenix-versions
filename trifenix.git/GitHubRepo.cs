@@ -176,7 +176,7 @@ namespace trifenix.git
         public T GetElement(string path)
         {
             var element = githubRepo.Get(path);
-            if (element == null) return default(T);
+            if (element == null) return default;
             return JsonConvert.DeserializeObject<T>(element, new JavaScriptDateTimeConverter());
         }
 
