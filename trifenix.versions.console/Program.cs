@@ -22,25 +22,26 @@ namespace trifenix.versions.console
         /// <param name="args">usamos CommandLineParser para parsear las opciones</param>
         static void Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<UpdateVersionArgs, object>(args);
+            
 
             var currentDitectory = AppDomain.CurrentDomain.BaseDirectory;
             var fontPath = Path.Combine(currentDitectory, "figlet/small");
             var fontTitle = new Figlet(Colorful.FigletFont.Load(fontPath));
 
-            if (result.Tag == ParserResultType.Parsed)
-            {
-                var resultUpdate = result.WithParsed<UpdateVersionArgs>(s=>Update(s));
-                return;
-            }
+            Parser.Default.ParseArguments<UpdateVersionArgs, Propagation>(args).MapResult(
+                (UpdateVersionArgs s)=> {
+                    Update(s);
+                    return 1;
+                }, 
+                (Propagation s) => {
+                    ProgragationMethod(s);
+                    return 1;
+                },
+                err=>1
+                );
 
-            var resultPropagate = Parser.Default.ParseArguments<Propagation, object>(args);
 
-            if (resultPropagate.Tag == ParserResultType.Parsed)
-            {
-
-            }
-
+            
 
         }
 
@@ -49,7 +50,7 @@ namespace trifenix.versions.console
         /// Actualización del paquete en los distintas dependencias.
         /// </summary>
         /// <param name="args"></param>
-        public static void Progragation(Propagation args) {
+        public static void ProgragationMethod(Propagation args) {
             var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email);
 
             versionSpec.SetVersionToDependant();
