@@ -68,7 +68,7 @@ namespace trifenix.versions
         {
             if (CurrentVersionStructure == null)
             {
-                var githubStructure = repoVersion.GetElement($"{packageName}.{packageType}.json", false, branch);
+                var githubStructure = repoVersion.GetElement($"{packageName}.{packageType}.json");
                 if (githubStructure != null) return githubStructure;
 
                 var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(packageName));
