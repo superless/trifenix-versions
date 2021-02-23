@@ -73,6 +73,7 @@ namespace trifenix.versions.console
             try
             {
                 var version = versionSpec.SetVersion();
+                System.Console.WriteLine(version);
             }
             catch (Exception ex)
             {
@@ -80,7 +81,7 @@ namespace trifenix.versions.console
                 Colorful.Console.WriteLine($"Error en la ejecución {ex.Message}", Color.Red);
             }
 
-            System.Console.WriteLine(version);
+            
             
         }
     }
