@@ -20,8 +20,11 @@ namespace trifenix.versions
 
         public string GetPackageFullPath(string folder, string packageName, PackageType type)
         {
-            var localFolder = string.IsNullOrWhiteSpace(folder) ? "./" : folder;
-            return Path.Combine(localFolder, $"{packageName}.{type}.json");
+            if (string.IsNullOrWhiteSpace(folder))
+            {
+                return $"{packageName}.{type}.json";
+            }
+            return Path.Combine(folder, $"{packageName}.{type}.json");
         }
 
 

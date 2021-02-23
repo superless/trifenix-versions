@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "trifenix.versions.console": {
+      "commandName": "Project",
+      "commandLineArgs": "update https://github.com/trifenix/versions.git --token 059b4655216325b476b5744e54cd50b25e77d73a --user devops --email devops@trifenix.io --branch master --name trifenix.connect.mdm --ktype nuget --build x "
+    }
+  }
+}

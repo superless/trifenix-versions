@@ -4,13 +4,12 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml;
 using trifenix.git.interfaces;
 using trifenix.versions.interfaces;
 using trifenix.versions.model;
 using Microsoft.XmlDiffPatch;
-using System.Text;
+using trifenix.git;
 
 namespace trifenix.versions
 {
@@ -30,7 +29,9 @@ namespace trifenix.versions
         private readonly IGithubRepo repo;
         private readonly IGithubRepo<VersionStructure> repoVersion;
         private readonly List<VersionStructure> defaultVersions;
+        private readonly string mail;
         private readonly StringUtils utils;
+        private readonly string userGithub;
 
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace trifenix.versions
         /// <param name="repo">Interface para operaciones de github</param>
         /// <param name="repoVersion">Interface para operaciones de github tipadas</param>
         /// <param name="defaultVersions">Interface para operaciones de github tipadas</param>
-        public VersionSpec(string githubRepo, string branch, string build, string token, string packageName, PackageType packageType, bool releaseDependant, IGithubRepo repo, IGithubRepo<VersionStructure> repoVersion, List<VersionStructure> defaultVersions)
+        public VersionSpec(string githubRepo, string branch, string build, string token, string packageName, PackageType packageType, bool releaseDependant, string email, string user, IGithubRepo repo, IGithubRepo<VersionStructure> repoVersion, List<VersionStructure> defaultVersions)
         {
             this.githubRepo = githubRepo;
             this.branch = branch;
@@ -58,29 +59,40 @@ namespace trifenix.versions
             this.repo = repo;
             this.repoVersion = repoVersion;
             this.defaultVersions = defaultVersions;
+            this.mail = email;
+            this.userGithub = user;
             utils = new StringUtils();
         }
 
-
-        public VersionStructure CurrentVersionStructure { get; set; }
-
-        public VersionStructure GetVersionStructure()
+        public VersionSpec(string githubRepo, string branch, string token, string packageName, PackageType packageType, bool releaseDependant, string userGithub, string mailGithub, string build = null) :
+            this(githubRepo, 
+                branch, 
+                build, 
+                token, 
+                packageName, 
+                packageType, 
+                releaseDependant, 
+                userGithub,
+                mailGithub,
+                new GitHubRepo(new StringUtils().SetGithubToken(githubRepo, token, userGithub), branch, userGithub, mailGithub), 
+                new GitHubRepo<VersionStructure>(new GitHubRepo(new StringUtils().SetGithubToken(githubRepo, token, userGithub), branch, userGithub, mailGithub)), 
+                Data.Packages.ToList())
         {
-            if (CurrentVersionStructure == null)
-            {
-                var githubStructure = repoVersion.GetElement($"{packageName}.{packageType}.json");
-                if (githubStructure != null) return githubStructure;
+            
+        }
+        
 
-                var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(packageName));
-                CurrentVersionStructure = defaultValue;
-                return defaultValue;
-            }
-            return CurrentVersionStructure;
-           
-
+        public VersionStructure GetVersionStructure(string name, PackageType type)
+        {
+            var githubStructure = repoVersion.GetElement($"{name}.{type}.json");
+            if (githubStructure != null) return githubStructure;
+            var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(name));
+            return defaultValue;
         }
 
-       
+        public VersionStructure GetVersionStructure() => GetVersionStructure(packageName, packageType);
+
+
 
         public string SetPackageJsonNpmVersion(Dependency dependency, CommitVersion commit, string folder)
         {
@@ -142,7 +154,7 @@ namespace trifenix.versions
 
         public string GetPreReleaseLabel()
         {
-            if (branch.ToLower().Equals("master"))
+            if (branch.ToLower().Equals("master") || branch.ToLower().Equals("main"))
             {
                 return string.Empty;
             }
@@ -416,7 +428,14 @@ namespace trifenix.versions
 
 
         private CommitVersion GetLastVersion(VersionStructure version) {
-            var maxSemantinc = version.Versions.Where(s => s.Branch.Equals(branch)).Max(s => s.SemanticBaseVersion);
+
+            var versions = version.Versions.Where(s => s.Branch.Equals(branch));
+            if (!versions.Any()) return null;
+
+
+            var maxSemantinc = versions.Max(s => s.SemanticBaseVersion);
+
+
 
             var maxSemanticVersions = version.Versions.Where(s => s.SemanticBaseVersion.Equals(maxSemantinc));
 
@@ -430,14 +449,15 @@ namespace trifenix.versions
         public string SetVersion()
         {
             //
-            var folder = repo.Clone();
+            
             var version = SetMainVersion(GetVersionStructure());
 
             var versTag = GetLastVersion(version).ToString();
 
-            var tag = $"{packageName}.{packageType}.{versTag}";
+            var tag = $"{packageName}.{versTag}";
 
-            var fileFullpath = utils.GetPackageFullPath(folder, packageName, packageType);
+            
+            var fileFullpath = utils.GetPackageFullPath(string.Empty, packageName, packageType);
 
             repoVersion.SaveFile(fileFullpath, tag, version);
 
@@ -447,7 +467,39 @@ namespace trifenix.versions
 
         public void SetVersionToDependant()
         {
-            throw new NotImplementedException();
+            var structure = GetVersionStructure();
+
+            // última versión de la rama actual.
+            var lastVersion = GetLastVersion(structure);
+
+            foreach (var item in structure.Dependencies)
+            {
+                var struc = GetVersionStructure(item.PackageName, packageType);
+                var last = GetLastVersion(struc);
+                if (last == null || last.DependantRelease == releaseDependant)
+                {
+                    UpdateGithub(item, lastVersion);
+                }   
+                
+            }
+        }
+
+        private void UpdateGithub(Dependency dependency, CommitVersion version) {
+            var gh = new GitHubRepo(dependency.GithubHttp, this.branch, this.userGithub, this.mail);
+            var folder = gh.Clone();
+
+            string contentFile;
+            if (packageType == PackageType.npm)
+            {
+
+                contentFile = SetPackageJsonNpmVersion(dependency, version, folder);
+
+            }
+            else {
+                contentFile = SetCsProjNugetVersion(dependency, version, folder);
+            }
+
+            gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
         }
     }
 }

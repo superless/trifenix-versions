@@ -15,6 +15,40 @@ namespace trifenix.versions.model
         /// Listado de dependencias a ser usada en la aplicación.
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
+
+            new VersionStructure {
+                PackageName="trifenix.connect.mdm.ts_model",
+                GithubHttp="https://github.com/trifenix/trifenix-cosmos-db.git",
+                GithubSsh="git@github.com:trifenix/trifenix-cosmos-db.git",
+                PackageType= PackageType.nuget,
+                Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch= 50
+                        }
+                    }
+                },
+                Dependencies = new List<Dependency>{
+
+                    new Dependency{
+                        PackageName="trifenix.connect.db.cosmos",
+                        GithubHttp="https://github.com/trifenix/trifenix-cosmos-db.git",
+                        GithubSsh="git@github.com:trifenix/trifenix-cosmos-db.git",
+                        pathPackageSettings="trifenix.connect.db.cosmos.csproj"
+                    }
+
+
+                }
+
+            },
+
             new VersionStructure {
                 PackageName="trifenix.connect.interfaces.db.cosmos",
                 GithubHttp="https://github.com/trifenix/trifenix-cosmos-db.git",
@@ -227,12 +261,6 @@ namespace trifenix.versions.model
                     }
                 },
                 Dependencies = new List<Dependency>{
-                    new Dependency{
-                        PackageName="trifenix.connect.interfaces",
-                        GithubHttp="https://github.com/trifenix/interfaces-connect.git",
-                        GithubSsh="git@github.com:trifenix/interfaces-connect.git",
-                        pathPackageSettings="trifenix.connect.interfaces.csproj"
-                    },
                     new Dependency{
                         PackageName="trifenix.connect",
                         GithubHttp="https://github.com/trifenix/connect.git",

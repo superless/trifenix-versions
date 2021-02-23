@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\trifenix.git.interfaces\trifenix.git.interfaces.csproj" />
+    <ProjectReference Include="..\trifenix.git\trifenix.git.csproj" />
     <ProjectReference Include="..\trifenix.versions.interfaces\trifenix.versions.interfaces.csproj" />
   </ItemGroup>
 

@@ -14,21 +14,22 @@ namespace trifenix.versions.tests.mock
             public static IGithubRepo GitRepo() {
                 var mock = new Mock<IGithubRepo>();
                 
-                Action<string, string, string, string> saveFile = (path, branch, message, element) => Log.AppendLine($"saveFile => path : {path} , brach : {branch}, message : {message}, element : {element}");
-                Func<string, string, string> get = (path, branch) =>
+                Action<string, string, string> saveFile = (path, message, element) => Log.AppendLine($"saveFile => path : {path} , message : {message}, element : {element}");
+                Func<string, string> get = (path) =>
                 {
-                    Log.AppendLine($"get => path : {path}, branch : {branch}");
-                    return $"get => path : {path}, branch : {branch}";
+                    Log.AppendLine($"get => path : {path}");
+                    return $"get => path : {path}";
                 };
-                Action<string, Dictionary<string, Func<bool>>> commit = (branch, operations) =>
+                Action <IEnumerable<Func<bool>>, string> commit = (operations, branch) =>
                 {
-                    var operationsStr = string.Join(',', operations.Select(s => s.Key).ToArray());
+                    var operationsStr = string.Join(',', operations.ToList());
                     Log.AppendLine($"commit => branch : {branch}, operations : {operationsStr}");
                 };
-                mock.Setup(s => s.Clone()).Returns("");
-                mock.Setup(s => s.SaveFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Callback(saveFile);
-                mock.Setup(s => s.Get(It.IsAny<string>(), It.IsAny<string>())).Returns(get);
-                mock.Setup(s => s.Commit(It.IsAny<string>(), It.IsAny<Dictionary<string, Func<bool>>>())).Callback(commit);
+                mock.Setup(s => s.Clone()).Returns("folder");
+                mock.Setup(s => s.Commit(It.IsAny<IEnumerable<Func<bool>>>(), It.IsAny<string>())).Callback(commit);
+                mock.Setup(s => s.SaveFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Callback(saveFile);
+                mock.Setup(s => s.Get(It.IsAny<string>())).Returns(get);
+                
                 return mock.Object;
             }
 
@@ -36,15 +37,15 @@ namespace trifenix.versions.tests.mock
             {
                 var mock = new Mock<IGithubRepo<VersionStructure>>();
 
-                Action<string, string, VersionStructure, string> saveFile = (path, message, element, branch) => Log.AppendLine($"saveFile<VersionStructure> => path : {path} , brach : {branch}, message : {message}, element : {element.PackageName}");
-                Func<string, bool, string, VersionStructure> get = (path, force, branch) =>
+                Action<string, string, VersionStructure> saveFile = (path, message, element) => Log.AppendLine($"saveFile<VersionStructure> => path : {path} , message : {message}, element : {element.PackageName}");
+                Func<string, VersionStructure> get = (path) =>
                 {
-                    Log.AppendLine($"getElement => path : {path}, branch : {branch}, force : {force}");
+                    Log.AppendLine($"getElement => path : {path}");
                     return defaultVersionStructure;
                 };
 
-                mock.Setup(s => s.SaveFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<VersionStructure>(), It.IsAny<string>())).Callback(saveFile);
-                mock.Setup(s => s.GetElement(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<string>())).Returns(get);
+                mock.Setup(s => s.SaveFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<VersionStructure>())).Callback(saveFile);
+                mock.Setup(s => s.GetElement(It.IsAny<string>())).Returns(get);
                 return mock.Object;
             }
 

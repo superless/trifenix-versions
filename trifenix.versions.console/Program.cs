@@ -30,12 +30,40 @@ namespace trifenix.versions.console
 
             if (result.Tag == ParserResultType.Parsed)
             {
-                Colorful.Console.WriteLine("Hello Arguments", Color.Red);
-                
-                result.WithParsed<UpdateVersionArgs>(s => Colorful.Console.WriteLine(s, Color.Blue));
+                var resultUpdate = result.WithParsed<UpdateVersionArgs>(s=>Update(s));
+                return;
+            }
+
+            var resultPropagate = Parser.Default.ParseArguments<Propagation, object>(args);
+
+            if (resultPropagate.Tag == ParserResultType.Parsed)
+            {
+
             }
 
 
+        }
+
+
+        /// <summary>
+        /// Actualización del paquete en los distintas dependencias.
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Progragation(Propagation args) {
+            var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email);
+
+            versionSpec.SetVersionToDependant();
+        }
+
+
+
+        public static void Update(UpdateVersionArgs args) {
+
+            var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email, args.Build);
+
+            var version = versionSpec.SetVersion();
+
+            System.Console.WriteLine(version);
             
         }
     }

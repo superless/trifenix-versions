@@ -4,6 +4,53 @@
         <name>trifenix.versions.console</name>
     </assembly>
     <members>
+        <member name="T:trifenix.arguments.Propagation">
+            <summary>
+            Propaga las dependencias
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:trifenix.arguments.Propagation.GitAddress" -->
+        <member name="P:trifenix.arguments.Propagation.username">
+            <summary>
+            Usuario que registra el cambio en el repositorio del componente
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.email">
+            <summary>
+            correo que registra el cambio en el repositorio del componente
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.branch">
+            <summary>
+            Rama que será sobrescrita en el github
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.Token">
+            <summary>
+            Token del github.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.packageName">
+            <summary>
+            build de azure devops.
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.packageType">
+            <summary>
+            Tipo del paquete
+            </summary>
+        </member>
+        <member name="P:trifenix.arguments.Propagation.DependantRelease">
+            <summary>
+            si la rama depende del release, se usará release para la nueva versión, sino la master.
+            </summary>
+        </member>
+        <member name="M:trifenix.arguments.Propagation.ToString">
+            <summary>
+            muestra de valores de la clase
+            </summary>
+            <returns>valores de la clase, solo por debug.</returns>
+        </member>
         <member name="T:trifenix.arguments.UpdateVersionArgs">
             <summary>
             Argumentos para generar una nueva versión del paquete.
@@ -34,12 +81,12 @@
             Token del github.
             </summary>
         </member>
-        <member name="P:trifenix.arguments.UpdateVersionArgs.packageName">
+        <member name="P:trifenix.arguments.UpdateVersionArgs.Build">
             <summary>
             build de azure devops.
             </summary>
         </member>
-        <member name="P:trifenix.arguments.UpdateVersionArgs.Build">
+        <member name="P:trifenix.arguments.UpdateVersionArgs.packageName">
             <summary>
             nombre del paquete a actualizar.
             </summary>
@@ -72,6 +119,12 @@
             Punto de arranque
             </summary>
             <param name="args">usamos CommandLineParser para parsear las opciones</param>
+        </member>
+        <member name="M:trifenix.versions.console.Program.Progragation(trifenix.arguments.Propagation)">
+            <summary>
+            Actualización del paquete en los distintas dependencias.
+            </summary>
+            <param name="args"></param>
         </member>
     </members>
 </doc>

@@ -19,6 +19,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix.connect",
                     PackageType.nuget,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s=>s.PackageName.Equals("trifenix.connect"))),
                     Data.Packages.ToList()
@@ -33,6 +35,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix.connect",
                     PackageType.nuget,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(null),
                     Data.Packages.ToList()
@@ -47,6 +51,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix.connect",
                     PackageType.nuget,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(versionStructure),
                     Data.Packages.ToList()
@@ -60,6 +66,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix.connect",
                     PackageType.nuget,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(versionStructure),
                     new List<VersionStructure>()
@@ -74,6 +82,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix.connect.interfaces",
                     PackageType.nuget,
                     true,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect.interfaces"))),
                     Data.Packages.ToList()
@@ -88,6 +98,8 @@ namespace trifenix.versions.tests.mock
                     "test.package.feature",
                     PackageType.nuget,
                     true,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect"))),
                     Data.Packages.ToList()
@@ -102,6 +114,8 @@ namespace trifenix.versions.tests.mock
                     "test.npm.package",
                     PackageType.npm,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect"))),
                     Data.Packages.ToList()
@@ -117,6 +131,8 @@ namespace trifenix.versions.tests.mock
                     "@trifenix/mdm",
                     PackageType.npm,
                     false,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
                     Data.Packages.ToList()
@@ -131,6 +147,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix@mdm",
                     PackageType.npm,
                     true,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
                     Data.Packages.ToList()
@@ -145,6 +163,8 @@ namespace trifenix.versions.tests.mock
                     "trifenix@mdm",
                     PackageType.npm,
                     true,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
                     Data.Packages.ToList()
@@ -159,6 +179,8 @@ namespace trifenix.versions.tests.mock
                     "test.npm.package.feature",
                     PackageType.npm,
                     true,
+                    "devops@trifenix.io",
+                    "devops",
                     Mock.GitRepo(),
                     Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect"))),
                     Data.Packages.ToList()

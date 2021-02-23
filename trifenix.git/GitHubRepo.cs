@@ -12,10 +12,10 @@ namespace trifenix.git
 {
     public class GitHubRepo : IGithubRepo
     {
-        private readonly string GitHubUrl;
-        private readonly string Branch;
-        private readonly string UserName;
-        private readonly string Email;
+        public readonly string GitHubUrl;
+        public readonly string Branch;
+        public readonly string UserName;
+        public readonly string Email;
 
         public GitHubRepo(string gitHubUrl, string branch, string userName, string email)
         {
@@ -31,12 +31,20 @@ namespace trifenix.git
         {
             if (string.IsNullOrWhiteSpace(Cloned))
             {
-                var folder = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), $"mdm-data-{Guid.NewGuid()}")).FullName;
-                Cloned = Repository.Clone(GitHubUrl, folder, new CloneOptions
+                Cloned =  Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), $"fnx-vers-{Guid.NewGuid()}")).FullName;
+                try
                 {
-                    BranchName = Branch
-                });
-                return Cloned;
+                    Repository.Clone(GitHubUrl, Cloned, new CloneOptions
+                    {
+                        BranchName = Branch
+                    });
+                    return Cloned;
+                }
+                catch (Exception e)
+                {
+                    Cloned = string.Empty;
+                    throw e;
+                }
             }
             return Cloned;
 
@@ -123,8 +131,17 @@ namespace trifenix.git
         public string Get(string path)
         {
             var tempFolder = Clone();
+            var fullPath = Path.Combine(tempFolder, path);
 
-            return ReadAllText(Path.Combine(tempFolder, path));
+            try
+            {
+                return ReadAllText(fullPath);
+            }
+            catch (Exception)
+            {
+                return null;
+                
+            }
 
 
 
@@ -159,6 +176,7 @@ namespace trifenix.git
         public T GetElement(string path)
         {
             var element = githubRepo.Get(path);
+            if (element == null) return default(T);
             return JsonConvert.DeserializeObject<T>(element, new JavaScriptDateTimeConverter());
         }
 
