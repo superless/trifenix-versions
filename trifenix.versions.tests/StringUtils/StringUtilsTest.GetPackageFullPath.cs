@@ -29,8 +29,22 @@ namespace trifenix.versions.tests
                 Assert.Equal("./test-package.nuget.json", fullpath);
             }
 
+            [Fact]
+            public void CorrectPathWithFolder()
+            {
+                // assign
+                var utils = new StringUtils();
+                // action
+                var fullpath = utils.GetPackageFullPath("./folder/", "test-package", PackageType.nuget);
 
-            
+
+                // assert
+                Assert.Equal("./folder/test-package.nuget.json", fullpath);
+            }
+
+
+
+
 
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace trifenix.versions.model
+﻿using System;
+
+namespace trifenix.versions.model
 {
     /// <summary>
     /// Detalles de un commit y su versión
@@ -12,7 +14,13 @@
 
 
         /// <summary>
-        /// 
+        /// Fecha en que se actualizó.
+        /// </summary>
+        public DateTime LastUpdate { get; set; }
+
+
+        /// <summary>
+        /// versión semántica.
         /// </summary>
         public Semantic SemanticBaseVersion { get; set; } = new Semantic();
 
@@ -37,16 +45,26 @@
         public bool IsFeature { get; set; }
 
         /// <summary>
+        /// Build de azure devops
+        /// </summary>
+        public string Build { get; set; }
+
+        /// <summary>
         /// genera la versión en string.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
+            if (Branch.ToLower().Equals("main") || Branch.ToLower().Equals("master"))
+            {
+                return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}";
+            }
+
             return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}.{PreReleaseLabel}.{Preview}";
         }
     }
 
-    public class Semantic {
+    public class Semantic : IComparable<Semantic>, IEquatable<Semantic> {
         /// <summary>
         /// Sección Major de la versión semántica
         /// </summary>
@@ -61,6 +79,21 @@
         /// Sección Patch de la versión semántica
         /// </summary>
         public int Patch { get; set; }
+
+        public int CompareTo(Semantic other)
+        {
+            if (Equals(other)) return 0;
+            if (Major >= other.Major) return 1;
+            if (Major >= other.Major && Minor >= other.Minor) return 1;
+            if( Patch > other.Patch) return 1;
+            return -1;
+
+        }
+
+        public bool Equals(Semantic other)
+        {
+            return Major == other.Major && Minor == other.Minor && Patch == other.Patch;
+        }
     }
 
 

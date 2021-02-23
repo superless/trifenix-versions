@@ -32,13 +32,7 @@ namespace trifenix.versions.interfaces
         string GetFeatureName(string branch);
 
 
-        /// <summary>
-        /// Obtiene el label de acuerdo a la rama.
-        /// </summary>
-        /// <param name="branch">rama a evaluar.</param>
-        /// <param name="isReleaseDependant">si es dependiente del release.</param>
-        /// <returns></returns>
-        string GetPreReleaseLabel(string branch, bool isReleaseDependant);
+        
 
 
         /// <summary>

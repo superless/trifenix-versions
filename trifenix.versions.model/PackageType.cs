@@ -2,7 +2,7 @@
 {
     public enum PackageType
     {
-        json,
+        npm,
         nuget
     }
 }

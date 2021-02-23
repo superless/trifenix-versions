@@ -30,6 +30,7 @@ namespace trifenix.versions.tests
 
             [Fact]
             public void GetCorrectFeatureFromWellFormBranch() {
+
                 // assign
                 var utils = new StringUtils();
                 // action

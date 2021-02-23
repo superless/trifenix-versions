@@ -30,9 +30,36 @@ namespace trifenix.versions.tests
                 Assert.True(repo.Major == 1 && repo.Minor == 0 && repo.Patch == 1);
             }
 
+            [Fact]
+            public void InCorrectSemanticThrowException()
+            {
+                // assign
+                var utils = new StringUtils();
+
+                var errorMessage = string.Empty;
+                try
+                {
+                    // action
+                    utils.GetSemanticVersionFromRelease("Release/1.a.1");
+                }
+                catch (Exception e)
+                {
+                    errorMessage = e.Message;
+                    
+                }
+
+                Assert.Contains("release", errorMessage);
+
+                // assert
 
 
-            
+
+                
+            }
+
+
+
+
 
         }
     }

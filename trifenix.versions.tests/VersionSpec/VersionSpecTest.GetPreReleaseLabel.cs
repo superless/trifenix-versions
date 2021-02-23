@@ -1,5 +1,6 @@
 ﻿using System;
 using trifenix.versions.model;
+using trifenix.versions.tests.mock;
 using Xunit;
 
 namespace trifenix.versions.tests
@@ -8,7 +9,7 @@ namespace trifenix.versions.tests
     /// <summary>
     /// Test de StringUtil
     /// </summary>
-    public partial class StringUtilsTest
+    public partial class VersionSpecTest
     {
 
         /// <summary>
@@ -22,9 +23,9 @@ namespace trifenix.versions.tests
             [Fact]
             public void MasterPreLeaseLabel() {
                 // assign
-                var utils = new StringUtils();
+                var spec = TestData.Instances.Default;
                 // action
-                var label = utils.GetPreReleaseLabel("master", true);
+                var label = spec.GetPreReleaseLabel();
                 // assert
 
                 Assert.Equal(string.Empty, label);
@@ -34,48 +35,48 @@ namespace trifenix.versions.tests
             public void ReleasePreLeaseLabel()
             {
                 // assign
-                var utils = new StringUtils();
+                var spec = TestData.Instances.DevelopRelease;
                 // action
-                var label = utils.GetPreReleaseLabel("release", true);
-                // assert
-
-                Assert.Equal("RC", label);
-            }
-
-            [Fact]
-            public void DevelopReleasePreLeaseLabel()
-            {
-                // assign
-                var utils = new StringUtils();
-                // action
-                var label = utils.GetPreReleaseLabel("develop", true);
+                var label = spec.GetPreReleaseLabel();
                 // assert
 
                 Assert.Equal("preview-release", label);
             }
 
             [Fact]
-            public void DevelopMasterReleasePreLeaseLabel()
+            public void DevelopReleaseFalsePreLeaseLabel()
             {
                 // assign
-                var utils = new StringUtils();
+                var spec = TestData.Instances.NpmDevelopNoRelease;
                 // action
-                var label = utils.GetPreReleaseLabel("develop", false);
+                var label = spec.GetPreReleaseLabel();
                 // assert
 
                 Assert.Equal("preview", label);
             }
 
             [Fact]
+            public void AlphaEveryBranch()
+            {
+                // assign
+                var spec = TestData.Instances.NpmDevelopNoReleaseCustomBranchRelease;
+                // action
+                var label = spec.GetPreReleaseLabel();
+                // assert
+
+                Assert.Equal("alpha-test-branch-release", label);
+            }
+
+            [Fact]
             public void FeatureMasterReleasePreLeaseLabel()
             {
                 // assign
-                var utils = new StringUtils();
+                var spec = TestData.Instances.NpmDevelopNoReleaseBranch;
                 // action
-                var label = utils.GetPreReleaseLabel("feature/test", false);
+                var label = spec.GetPreReleaseLabel();
                 // assert
 
-                Assert.Equal("alpha.test", label);
+                Assert.Equal("RC", label);
             }
 
 

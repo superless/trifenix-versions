@@ -245,7 +245,7 @@ namespace trifenix.versions.model
                 PackageName="trifenix@mdm", // los paquetes de npm usan trifenix al principio
                 GithubHttp="https://github.com/trifenix/mdm-auto-npm-model.git",
                 GithubSsh="git@github.com:trifenix/mdm-auto-npm-model.git",
-                PackageType= PackageType.json,
+                PackageType= PackageType.npm,
                 Versions = new List<CommitVersion>{
                     new CommitVersion{
                         Branch="master",

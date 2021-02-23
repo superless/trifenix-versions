@@ -10,6 +10,11 @@ namespace trifenix.versions.interfaces
     /// </summary>
     public interface IVersionSpec
     {
+        /// <summary>
+        /// Obtiene el label de acuerdo a la rama.
+        /// </summary>
+        /// <returns>release label</returns>
+        string GetPreReleaseLabel();
 
         /// <summary>
         /// Obtiene una estructura de dependencias de un paquete desde un repositorio,
@@ -47,8 +52,9 @@ namespace trifenix.versions.interfaces
         /// </summary>
         /// <param name="dependency">la dependencia que se debe actualizar</param>
         /// <param name="commit">Parámetros del último commit</param>
+        /// <param name="folder">carpeta donde buscar el archivo</param>
         /// <returns>csproj en memoria con la nueva versión</returns>
-        string SetCsProjNugetVersion(Dependency dependency, CommitVersion commit);
+        string SetCsProjNugetVersion(Dependency dependency, CommitVersion commit, string folder);
 
         /// <summary>
         /// Actualiza el package json con la nueva versión.
@@ -56,16 +62,10 @@ namespace trifenix.versions.interfaces
         /// <param name="dependency">dependencia a actualizar</param>
         /// <param name="commit">datos de la última versión</param>
         /// <returns></returns>
-        string SetPackageJsonNpmVersion(Dependency dependency, CommitVersion commit);
+        string SetPackageJsonNpmVersion(Dependency dependency, CommitVersion commit, string folder);
 
 
-        /// <summary>
-        /// Obtiene el string de un archivo.
-        /// </summary>
-        /// <param name="path">ruta del archivo.</param>
-        /// <returns>string que contiene el archivo</returns>
-        string GetFileStringFromPath(string path);
-
+       
 
     }
 

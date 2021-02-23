@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace trifenix.versions.model
 {
@@ -7,7 +10,7 @@ namespace trifenix.versions.model
     /// Estructura de un paquete y sus versiones, a ser almacenada
     /// en en repositorio
     /// </summary>
-    public class VersionStructure
+    public class VersionStructure : IEquatable<VersionStructure>
     {
         /// <summary>
         /// Nombre del paquete.
@@ -36,6 +39,8 @@ namespace trifenix.versions.model
         /// </summary>
         public List<CommitVersion> Versions { get; set; } = new List<CommitVersion>();
 
+        
+
 
         /// <summary>
         /// listado con los paquetes dependientes del paquete principal.
@@ -43,6 +48,25 @@ namespace trifenix.versions.model
         public List<Dependency> Dependencies { get; set; }
 
 
+        /// <summary>
+        /// Crea un hash para comparar un objeto versionStructure con otro.
+        /// </summary>
+        /// <param name="other">versionStructure a comparar</param>
+        /// <returns>true si es igual el hash.</returns>
+        public bool Equals(VersionStructure other)
+        {
+            var origin = this;
+            var destiny = other;
+            var serializeOrigin = JsonConvert.SerializeObject(origin, new JavaScriptDateTimeConverter());
+            var serializeDestiny = JsonConvert.SerializeObject(destiny, new JavaScriptDateTimeConverter());
+            var hashOrigin = Hash.ComputeSha256Hash(serializeOrigin);
+            var hashDestiny = Hash.ComputeSha256Hash(serializeDestiny);
+
+            return hashOrigin.Equals(hashDestiny);
+
+        }
+
+        
     }
 
 
