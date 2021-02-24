@@ -46,6 +46,14 @@ namespace trifenix.versions.interfaces
         /// <param name="eventMessage">evento que captura los mensajes de la propagación.</param>
         void SetVersionToDependant(Action<string> eventMessage);
 
+        /// <summary>
+        /// Función personalizada que permite guardar o actualizar en github un versionStructure
+        /// Se usa para asignar las últimas versiones de los paquetes, de las cuales un componente depende
+        /// Se guarda una herencia de CommitVersion que incluye el PackageName
+        /// </summary>
+        /// <param name="eventMessage">evento que captura los mensajes de la propagación.</param>
+        void SaveVersionStructure(VersionStructure versionStructure);
+
 
         /// <summary>
         /// Método que permitirá obtener el csproj con la nueva versión para ser persistida.
