@@ -56,46 +56,15 @@ namespace trifenix.git
             var folder = Clone();
             using (var repo = new Repository(folder))
             {
-                // obtiene los tags desde el repositorio
-                var listTags = repo.Tags;
-
-                var lastCommit = repo.Commits.QueryBy(new CommitFilter {
-                    FirstParentOnly = true,
-                    SortBy = CommitSortStrategies.Time
-                }).Last();
-
-
-
-                var previosCommit = $"prev-{message}";
                 var currentCommit = $"{message}";
-                if (repo.Tags.Any(s=>s.FriendlyName.Equals(previosCommit)))
-                {
-                    
-                    repo.Tags.Remove(previosCommit);
-                }
-                
-                // aplicamos el tag/
-                var tg = repo.ApplyTag($"prev-{message}",lastCommit.Id.Sha);
-
-               
-
-
-
-                // enviamos el tag al servidor 
-                repo.Network.Push(repo.Network.Remotes["origin"], tg.CanonicalName, new PushOptions { });
-
+                var tgNew = repo.ApplyTag(currentCommit);
                 if (repo.Tags.Any(s => s.FriendlyName.Equals(currentCommit)))
                 {
                     repo.Tags.Remove(currentCommit);
                 }
 
-                var tgNew = repo.ApplyTag(currentCommit);
-
-                
-
                 // carpeta de código fuente.
                 var srcFolder = folder;
-
 
                 //ejecutamos los commits del parámetro.
                 foreach (var action in commitMessageFileOperations)
@@ -104,9 +73,8 @@ namespace trifenix.git
                     {
                         Commands.Stage(repo, "*");
                     }
-                    
-
                 }
+
 
                 
 
