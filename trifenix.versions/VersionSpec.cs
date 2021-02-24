@@ -465,41 +465,82 @@ namespace trifenix.versions
 
         }
 
-        public void SetVersionToDependant()
+        public void SetVersionToDependant(Action<string> eventMessage)
         {
+            eventMessage.Invoke("Obteniendo estuctura del paquete desde github");
             var structure = GetVersionStructure();
+            eventMessage.Invoke($"{packageName} obtenido desde github");
+
 
             // última versión de la rama actual.
             var lastVersion = GetLastVersion(structure);
+            eventMessage.Invoke($"la última versión de {packageName} es {lastVersion}");
 
             foreach (var item in structure.Dependencies)
             {
+                eventMessage.Invoke($"----------------------------------");
+                eventMessage.Invoke($"Dependencia : {item.PackageName}");
+                eventMessage.Invoke($"----------------------------------");
+
                 var struc = GetVersionStructure(item.PackageName, packageType);
+
+                
+
                 var last = GetLastVersion(struc);
+
+                eventMessage.Invoke($"La version actual de la dependencia es {item.PackageName} es {(last==null?"[no registrada]":last.ToString())}");
+
+
                 if (last == null || last.DependantRelease == releaseDependant)
                 {
-                    UpdateGithub(item, lastVersion);
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage.Invoke($"se actualizará {packageName} a {lastVersion} en {item.PackageName}");
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    UpdateGithub(item, lastVersion, eventMessage);
+                }
+                else {
+                    eventMessage.Invoke($"{item.PackageName} ya estableció su continuidad (master/release)  debe cambiar dependant o crear un nuevo release de  {packageName}");
                 }   
                 
             }
         }
 
-        private void UpdateGithub(Dependency dependency, CommitVersion version) {
+        private void UpdateGithub(Dependency dependency, CommitVersion version, Action<string> eventMessage) {
             var gh = new GitHubRepo(dependency.GithubHttp, this.branch, this.userGithub, this.mail);
+
             var folder = gh.Clone();
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($"{dependency.PackageName} es clonado en la carpeta temporal  desde {dependency.GithubHttp}");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($"{folder}");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($" Desde url Github : {dependency.GithubHttp}");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+           
+
+
+
 
             string contentFile;
+            eventMessage.Invoke($"Se obtiene {dependency.pathPackageSettings}");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
             if (packageType == PackageType.npm)
-            {
-
+            {   
                 contentFile = SetPackageJsonNpmVersion(dependency, version, folder);
 
             }
             else {
                 contentFile = SetCsProjNugetVersion(dependency, version, folder);
             }
+            eventMessage.Invoke(contentFile);
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($"-------------------------------------------------------------------------------");
 
             gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
+            eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
         }
     }
 }
