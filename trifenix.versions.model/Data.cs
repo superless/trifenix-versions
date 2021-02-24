@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using trifenix.versions.model;
@@ -126,7 +127,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic{ // actual versión
                             Major = 0,
                             Minor = 8,
-                            Patch= 77
+                            Patch= 86
                         }
                     }
                 },
@@ -266,7 +267,21 @@ namespace trifenix.versions.model
 
         };
 
-       
+
+        public static MapperConfiguration Configuration<T1,T2>() {
+            return new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<T1, T2>();
+            });
+
+        }
+
+      
+
+        public static IMapper Mapper => Configuration<VersionStructure, VersionStructure>().CreateMapper();
+
+        public static IMapper MapperCommitVersion => Configuration<CommitVersion, CommitPackageVersion>().CreateMapper();
+
 
 
 
