@@ -39,7 +39,11 @@ namespace trifenix.versions.model
         /// </summary>
         public List<CommitVersion> Versions { get; set; } = new List<CommitVersion>();
 
-        
+
+        /// <summary>
+        /// Paquetes de los que depende.
+        /// </summary>
+        public List<CommitPackageVersion> DependantVersions { get; set; } = new List<CommitPackageVersion>();
 
 
         /// <summary>
