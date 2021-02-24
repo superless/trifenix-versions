@@ -36,7 +36,7 @@ namespace trifenix.versions.tests
                 // assign
                 var defaultPackage = Data.Packages.First(s => s.PackageName.Equals("trifenix.connect"));
 
-                var local = TestData.MapperData.Mapper.Map<VersionStructure>(defaultPackage);
+                var local = Data.Mapper.Map<VersionStructure>(defaultPackage);
 
                 local.Versions.Add(new CommitVersion {
                     Branch = "develop",

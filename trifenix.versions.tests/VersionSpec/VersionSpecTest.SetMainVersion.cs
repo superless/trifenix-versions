@@ -13,7 +13,7 @@ namespace trifenix.versions.tests
             public void SetStructureMasterWithoutRelease() {
                 var spec = TestData.Instances.Default;
 
-                var package = TestData.MapperData.Mapper.Map<VersionStructure>(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect")));
+                var package = Data.Mapper.Map<VersionStructure>(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect")));
                 var version = spec.SetMainVersion(package);
 
                 var currentPatch = package.Versions.Where(s => s.Branch.Equals("master")).Max(s => s.SemanticBaseVersion.Patch);
@@ -25,7 +25,7 @@ namespace trifenix.versions.tests
             public void CheckWithDevelopBranch()
             {
                 var spec = TestData.Instances.DevelopRelease;
-                var package = TestData.MapperData.Mapper.Map<VersionStructure>(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect.interfaces")));
+                var package = Data.Mapper.Map<VersionStructure>(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect.interfaces")));
 
                 var versionMaster = package.Versions.First();
                 var version = spec.SetMainVersion(package);
