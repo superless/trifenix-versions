@@ -34,6 +34,13 @@ namespace trifenix.versions.console
                     return 1;
                 }, 
                 (Propagation s) => {
+                    Colorful.Console.WriteLine(fontTitle.ToAscii("Trifenix Connect"), Color.Red);
+
+                    // metadata model
+                    Colorful.Console.WriteLine(fontTitle.ToAscii("Trifenix-Versions"), Color.Purple);
+                    Colorful.Console.WriteLine($"Propagación de dependencias para {s.packageName} rama {s.branch}", Color.DarkGreen);
+                    Colorful.Console.WriteLine($"---------------------------------------------------", Color.DarkGreen);
+
                     ProgragationMethod(s);
                     return 1;
                 },
@@ -49,13 +56,17 @@ namespace trifenix.versions.console
         /// <summary>
         /// Actualización del paquete en los distintas dependencias.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Argumentos de propagación, los mismos del update + build</param>
         public static void ProgragationMethod(Propagation args) {
+
+            // version main
             var versionSpec = new VersionSpec(args.GitAddress, args.branch, args.Token, args.packageName, args.packageType, args.DependantRelease, args.username, args.email);
 
             try
             {
-                versionSpec.SetVersionToDependant();
+               
+
+                versionSpec.SetVersionToDependant((message)=> Colorful.Console.WriteLine($"${message}", Color.Green));
             }
             catch (Exception ex)
             {
