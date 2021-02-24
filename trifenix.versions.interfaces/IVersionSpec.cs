@@ -43,7 +43,8 @@ namespace trifenix.versions.interfaces
         /// <summary>
         /// Actualiza el paquete en cada github de cada dependiente.
         /// </summary>
-        void SetVersionToDependant();
+        /// <param name="eventMessage">evento que captura los mensajes de la propagación.</param>
+        void SetVersionToDependant(Action<string> eventMessage);
 
 
         /// <summary>
