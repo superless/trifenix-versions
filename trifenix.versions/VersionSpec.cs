@@ -427,7 +427,7 @@ namespace trifenix.versions
 
 
 
-        private CommitVersion GetLastVersion(VersionStructure version) {
+        private static CommitVersion GetLastVersion(VersionStructure version, string branch) {
 
             var versions = version.Versions.Where(s => s.Branch.Equals(branch));
             if (!versions.Any()) return null;
@@ -452,7 +452,7 @@ namespace trifenix.versions
             
             var version = SetMainVersion(GetVersionStructure());
 
-            var versTag = GetLastVersion(version).ToString();
+            var versTag = GetLastVersion(version, branch).ToString();
 
             var tag = $"{packageName}.{versTag}";
 
@@ -473,7 +473,7 @@ namespace trifenix.versions
 
 
             // última versión de la rama actual.
-            var lastVersion = GetLastVersion(structure);
+            var lastVersion = GetLastVersion(structure, branch);
             eventMessage.Invoke($"la última versión de {packageName} es {lastVersion}");
 
             foreach (var item in structure.Dependencies)
@@ -486,7 +486,7 @@ namespace trifenix.versions
 
                 
 
-                var last = GetLastVersion(struc);
+                var last = GetLastVersion(struc, branch);
 
                 eventMessage.Invoke($"La version actual de la dependencia es {item.PackageName} es {(last==null?"[no registrada]":last.ToString())}");
 
@@ -499,6 +499,19 @@ namespace trifenix.versions
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
                     UpdateGithub(item, lastVersion, eventMessage);
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage.Invoke($"Guardando versión paquete, para llevar el rastro de las actualizaciones.");
+                    var versionPackage = GetVersionStructure(item.PackageName, packageType);
+                    var versionPackageVersion = Data.MapperCommitVersion.Map<CommitPackageVersion>(lastVersion);
+                    versionPackageVersion.PackageName = packageName;
+                    versionPackage.DependantVersions.Add(versionPackageVersion);
+                    eventMessage.Invoke($"Se asigna la última versión de {packageName} a los paquetes dependientes de {item.PackageName} con la version {lastVersion}");
+                    SaveVersionStructure(versionPackage);
+
+
+
+                    
                 }
                 else {
                     eventMessage.Invoke($"{item.PackageName} ya estableció su continuidad (master/release)  debe cambiar dependant o crear un nuevo release de  {packageName}");
@@ -541,6 +554,20 @@ namespace trifenix.versions
 
             gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
             eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
+        }
+
+        public void SaveVersionStructure(VersionStructure versionStructure)
+        {
+            var version = SetMainVersion(versionStructure);
+
+            var versTag = GetLastVersion(version, branch).ToString();
+
+            var tag = $"{packageName}.{versionStructure.PackageName}.{versTag}";
+
+
+            var fileFullpath = utils.GetPackageFullPath(string.Empty, packageName, packageType);
+
+            repoVersion.SaveFile(fileFullpath, tag, version);
         }
     }
 }
