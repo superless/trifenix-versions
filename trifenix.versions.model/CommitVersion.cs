@@ -64,6 +64,12 @@ namespace trifenix.versions.model
         }
     }
 
+
+    public class CommitPackageVersion : CommitVersion {
+        public string PackageName { get; set; }
+
+    }
+
     public class Semantic : IComparable<Semantic>, IEquatable<Semantic> {
         /// <summary>
         /// Sección Major de la versión semántica
