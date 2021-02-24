@@ -3,19 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.versions.console", "trifenix.versions.console\trifenix.versions.console.csproj", "{9B482342-A931-431A-A4F7-1F53CB1DA971}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.versions.console", "trifenix.versions.console\trifenix.versions.console.csproj", "{9B482342-A931-431A-A4F7-1F53CB1DA971}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.versions", "trifenix.versions\trifenix.versions.csproj", "{B605EEF7-D3EA-4F4E-90DD-B34904E14452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.versions", "trifenix.versions\trifenix.versions.csproj", "{B605EEF7-D3EA-4F4E-90DD-B34904E14452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.git", "trifenix.git\trifenix.git.csproj", "{E9C630EC-A42D-4050-B17F-DB7FA9A4B937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.git", "trifenix.git\trifenix.git.csproj", "{E9C630EC-A42D-4050-B17F-DB7FA9A4B937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.versions.tests", "trifenix.versions.tests\trifenix.versions.tests.csproj", "{1FBEB494-3F66-4BF8-A41E-276F6E906A8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.versions.tests", "trifenix.versions.tests\trifenix.versions.tests.csproj", "{1FBEB494-3F66-4BF8-A41E-276F6E906A8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.versions.model", "trifenix.versions.model\trifenix.versions.model.csproj", "{7AE0F7A1-EFA2-447E-91ED-C4F55C0592B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.versions.model", "trifenix.versions.model\trifenix.versions.model.csproj", "{7AE0F7A1-EFA2-447E-91ED-C4F55C0592B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.versions.interfaces", "trifenix.versions.interfaces\trifenix.versions.interfaces.csproj", "{9F150104-BC00-4DF4-B0B7-B1FD3B959695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.versions.interfaces", "trifenix.versions.interfaces\trifenix.versions.interfaces.csproj", "{9F150104-BC00-4DF4-B0B7-B1FD3B959695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trifenix.git.interfaces", "trifenix.git.interfaces\trifenix.git.interfaces.csproj", "{21117E3D-7966-4FE1-999B-D736C9F3F5D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trifenix.git.interfaces", "trifenix.git.interfaces\trifenix.git.interfaces.csproj", "{21117E3D-7966-4FE1-999B-D736C9F3F5D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.git", "2.git", "{D6D90B82-1E81-436C-8012-9526D4C9504B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.output", "1.output", "{C66F5856-504E-4B43-A2A8-01B352BBFD5E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.versions", "3.versions", "{E0FE0A96-F03D-402C-B2D5-C87C3D8ABF15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.tests", "4.tests", "{C558C73C-D080-4FAB-854A-74EF7ED639B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +62,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B482342-A931-431A-A4F7-1F53CB1DA971} = {C66F5856-504E-4B43-A2A8-01B352BBFD5E}
+		{B605EEF7-D3EA-4F4E-90DD-B34904E14452} = {E0FE0A96-F03D-402C-B2D5-C87C3D8ABF15}
+		{E9C630EC-A42D-4050-B17F-DB7FA9A4B937} = {D6D90B82-1E81-436C-8012-9526D4C9504B}
+		{1FBEB494-3F66-4BF8-A41E-276F6E906A8D} = {C558C73C-D080-4FAB-854A-74EF7ED639B2}
+		{7AE0F7A1-EFA2-447E-91ED-C4F55C0592B7} = {E0FE0A96-F03D-402C-B2D5-C87C3D8ABF15}
+		{9F150104-BC00-4DF4-B0B7-B1FD3B959695} = {E0FE0A96-F03D-402C-B2D5-C87C3D8ABF15}
+		{21117E3D-7966-4FE1-999B-D736C9F3F5D4} = {D6D90B82-1E81-436C-8012-9526D4C9504B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E73A832-A64D-4D1C-98D8-588EB30DE2FD}
