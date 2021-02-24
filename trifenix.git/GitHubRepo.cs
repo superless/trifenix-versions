@@ -64,8 +64,16 @@ namespace trifenix.git
                     SortBy = CommitSortStrategies.Time
                 }).Last();
 
-                
 
+
+                var previosCommit = $"prev-{message}";
+                var currentCommit = $"{message}";
+                if (repo.Tags.Any(s=>s.FriendlyName.Equals(previosCommit)))
+                {
+                    
+                    repo.Tags.Remove(previosCommit);
+                }
+                
                 // aplicamos el tag/
                 var tg = repo.ApplyTag($"prev-{message}",lastCommit.Id.Sha);
 
@@ -76,7 +84,12 @@ namespace trifenix.git
                 // enviamos el tag al servidor 
                 repo.Network.Push(repo.Network.Remotes["origin"], tg.CanonicalName, new PushOptions { });
 
-                var tgNew = repo.ApplyTag($"{message}");
+                if (repo.Tags.Any(s => s.FriendlyName.Equals(currentCommit)))
+                {
+                    repo.Tags.Remove(currentCommit);
+                }
+
+                var tgNew = repo.ApplyTag(currentCommit);
 
                 
 
@@ -95,10 +108,12 @@ namespace trifenix.git
 
                 }
 
-                repo.Commit(message, new Signature(UserName, this.Email, DateTimeOffset.Now), new Signature(this.UserName, this.Email, DateTimeOffset.Now));
+                
 
 
                 repo.Network.Push(repo.Network.Remotes["origin"], $@"refs/heads/{Branch}", new PushOptions { });
+
+                repo.Commit(message, new Signature(UserName, this.Email, DateTimeOffset.Now), new Signature(this.UserName, this.Email, DateTimeOffset.Now));
 
                 repo.Network.Push(repo.Network.Remotes["origin"], tgNew.CanonicalName, new PushOptions { });
             }
