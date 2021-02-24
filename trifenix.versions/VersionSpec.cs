@@ -75,7 +75,7 @@ namespace trifenix.versions
                 userGithub,
                 mailGithub,
                 new GitHubRepo(new StringUtils().SetGithubToken(githubRepo, token, userGithub), branch, userGithub, mailGithub), 
-                new GitHubRepo<VersionStructure>(new GitHubRepo(new StringUtils().SetGithubToken(githubRepo, token, userGithub), branch, userGithub, mailGithub)), 
+                new GitHubRepo<VersionStructure>(new GitHubRepo(new StringUtils().SetGithubToken(githubRepo, token, userGithub), "master", userGithub, mailGithub)), 
                 Data.Packages.ToList())
         {
             
