@@ -57,11 +57,13 @@ namespace trifenix.git
             using (var repo = new Repository(folder))
             {
                 var currentCommit = $"{message}";
-                var tgNew = repo.ApplyTag(currentCommit);
+                
                 if (repo.Tags.Any(s => s.FriendlyName.Equals(currentCommit)))
                 {
                     repo.Tags.Remove(currentCommit);
                 }
+
+                var tgNew = repo.ApplyTag(currentCommit);
 
                 // carpeta de código fuente.
                 var srcFolder = folder;
@@ -76,14 +78,15 @@ namespace trifenix.git
                 }
 
 
-                
 
+
+                repo.Network.Push(repo.Network.Remotes["origin"], tgNew.CanonicalName, new PushOptions { });
 
                 repo.Network.Push(repo.Network.Remotes["origin"], $@"refs/heads/{Branch}", new PushOptions { });
 
                 repo.Commit(message, new Signature(UserName, this.Email, DateTimeOffset.Now), new Signature(this.UserName, this.Email, DateTimeOffset.Now));
 
-                repo.Network.Push(repo.Network.Remotes["origin"], tgNew.CanonicalName, new PushOptions { });
+                
             }
         }
 
