@@ -14,7 +14,7 @@ namespace trifenix.versions.tests
 
                 var version = spec.SetVersion();
 
-                Assert.Equal("0.8.78", version);
+                Assert.Equal("0.8.87", version);
             }
 
             [Fact]
@@ -24,7 +24,7 @@ namespace trifenix.versions.tests
 
                 var version = spec.SetVersion();
 
-                Assert.Equal("0.8.13.preview.1", version);
+                Assert.Equal("0.8.13-preview.1", version);
             }
         }
 
