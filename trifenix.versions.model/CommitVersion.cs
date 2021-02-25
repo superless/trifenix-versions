@@ -60,7 +60,7 @@ namespace trifenix.versions.model
                 return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}";
             }
 
-            return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}.{PreReleaseLabel}.{Preview}";
+            return $"{SemanticBaseVersion.Major}.{SemanticBaseVersion.Minor}.{SemanticBaseVersion.Patch}-{PreReleaseLabel}.{Preview}";
         }
     }
 
