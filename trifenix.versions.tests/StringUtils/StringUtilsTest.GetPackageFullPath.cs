@@ -26,7 +26,7 @@ namespace trifenix.versions.tests
                 var fullpath = utils.GetPackageFullPath("", "test-package", PackageType.nuget);
                 // assert
 
-                Assert.Equal("./test-package.nuget.json", fullpath);
+                Assert.Equal("test-package.nuget.json", fullpath);
             }
 
             [Fact]
