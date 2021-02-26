@@ -72,9 +72,11 @@ namespace trifenix.git
                     }
                 }
 
+                repo.Commit(message, new Signature(UserName, this.Email, DateTimeOffset.Now), new Signature(this.UserName, this.Email, DateTimeOffset.Now));
+
                 repo.Network.Push(repo.Network.Remotes["origin"], $@"refs/heads/{Branch}", new PushOptions { });
 
-                repo.Commit(message, new Signature(UserName, this.Email, DateTimeOffset.Now), new Signature(this.UserName, this.Email, DateTimeOffset.Now));
+                
 
                 
             }
