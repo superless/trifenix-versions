@@ -46,7 +46,7 @@ namespace trifenix.arguments
         /// <summary>
         /// build de azure devops.
         /// </summary>
-        [Option('b', "build", Required = false, HelpText = "Build, no requerido para la rama master.")]
+        [Option('b', "name", Required = true, HelpText = "nombre del paquete.")]
         public string packageName { get; set; }
 
 
