@@ -429,6 +429,7 @@ namespace trifenix.versions
 
         private static CommitVersion GetLastVersion(VersionStructure version, string branch) {
 
+            
             var versions = version.Versions.Where(s => s.Branch.Equals(branch));
             if (!versions.Any()) return null;
 
@@ -586,7 +587,7 @@ namespace trifenix.versions
             var tag = $"{packageName}.{versionStructure.PackageName}.{versTag}";
 
 
-            var fileFullpath = utils.GetPackageFullPath(string.Empty, packageName, packageType);
+            var fileFullpath = utils.GetPackageFullPath(string.Empty, versionStructure.PackageName, packageType);
 
             repoVersion.SaveFile(fileFullpath, tag, version);
         }
