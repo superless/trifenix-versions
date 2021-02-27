@@ -24,7 +24,7 @@ namespace trifenix.versions.tests
                 var spec = TestData.Instances.DefaultNullGithub;
 
                 // action
-                var result = spec.GetVersionStructure();
+                var result = spec.GetVersionStructure((s)=> { });
 
                 // assert
                 Assert.Equal(Data.Packages.First(s=>s.PackageName.Equals("trifenix.connect")), result);
@@ -47,7 +47,7 @@ namespace trifenix.versions.tests
                 var spec = TestData.Instances.SetVersionStructureGithub(local);
 
                 // action
-                var result = spec.GetVersionStructure();
+                var result = spec.GetVersionStructure((s) => { });
 
                 // assert
                 Assert.Equal(local, result);
@@ -60,7 +60,7 @@ namespace trifenix.versions.tests
                 var spec = TestData.Instances.SetVersionStructureWithoutDefaultGithub(null);
 
                 // action
-                var result = spec.GetVersionStructure();
+                var result = spec.GetVersionStructure((s) => { });
 
                 // assert
                 Assert.Null(result);
