@@ -86,8 +86,15 @@ namespace trifenix.versions
         {
             message.Invoke($"obteniendo {name}.{type}");
             var githubStructure = repoVersion.GetElement($"{name}.{type}.json");
-            if (githubStructure != null) return githubStructure;
             var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(name));
+
+            // temporal, para poder actualizar dependencias desde acá.
+            if (defaultValue!=null && githubStructure!=null)
+            {
+                githubStructure.Dependencies = defaultValue.Dependencies;
+            }
+            if (githubStructure != null) return githubStructure;
+            
             return defaultValue;
         }
 
