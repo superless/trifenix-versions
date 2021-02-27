@@ -71,7 +71,13 @@ namespace trifenix.versions.console
             catch (Exception ex)
             {
                 Colorful.Console.WriteLine($"Error en la ejecución {ex.Message}", Color.Red);
-                
+                Colorful.Console.WriteLine($"Error en la ejecución {ex.StackTrace}", Color.Red);
+                if (ex.InnerException !=null)
+                {
+                    Colorful.Console.WriteLine($"Error en la ejecución {ex.InnerException.Message}", Color.DarkRed);
+                    Colorful.Console.WriteLine($"Error en la ejecución {ex.InnerException.StackTrace}", Color.DarkRed);
+                }
+
             }
         }
 
