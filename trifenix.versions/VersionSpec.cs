@@ -526,9 +526,9 @@ namespace trifenix.versions
         }
 
         private bool UpdateGithub(Dependency dependency, CommitVersion version, Action<string> eventMessage) {
-            var gh = new GitHubRepo(dependency.GithubHttp, this.branch, this.userGithub, this.mail);
+            var gh = new GitHubRepo(new StringUtils().SetGithubToken(dependency.GithubHttp, token, userGithub), this.branch, this.userGithub, this.mail);
 
-            string folder = string.Empty;
+            string folder;
 
             try
             {
