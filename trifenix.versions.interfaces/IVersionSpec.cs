@@ -21,7 +21,7 @@ namespace trifenix.versions.interfaces
         /// devuelve uno por defecto, sino lo encuentra
         /// </summary>
         /// <returns>Estructura del paquete y sus dependenicias</returns>
-        VersionStructure GetVersionStructure();
+        VersionStructure GetVersionStructure(Action<string> message);
 
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace trifenix.versions.interfaces
         /// y persistirla en un repositorio.
         /// </summary>
         /// <returns>Nueva versión generada</returns>
-        string SetVersion();
+        string SetVersion(Action<string> message);
 
 
         /// <summary>
