@@ -47,7 +47,7 @@ namespace trifenix.versions
         /// <param name="repo">Interface para operaciones de github</param>
         /// <param name="repoVersion">Interface para operaciones de github tipadas</param>
         /// <param name="defaultVersions">Interface para operaciones de github tipadas</param>
-        public VersionSpec(string githubRepo, string branch, string build, string token, string packageName, PackageType packageType, bool releaseDependant, string email, string user, IGithubRepo repo, IGithubRepo<VersionStructure> repoVersion, List<VersionStructure> defaultVersions)
+        public VersionSpec(string githubRepo, string branch, string build, string token, string packageName, PackageType packageType, bool releaseDependant, string user, string email, IGithubRepo repo, IGithubRepo<VersionStructure> repoVersion, List<VersionStructure> defaultVersions)
         {
             this.githubRepo = githubRepo;
             this.branch = branch;
@@ -100,7 +100,8 @@ namespace trifenix.versions
                 {
                     throw new Exception("error al obtener estructura después de 3 intentos fallidos");
                 }
-                return GetVersionStructure(name, type, message, intentos++);
+                intentos = intentos++;
+                return GetVersionStructure(name, type, message, intentos);
 
             }
             if (githubStructure != null) return githubStructure;
@@ -586,9 +587,8 @@ namespace trifenix.versions
             else {
                 contentFile = SetCsProjNugetVersion(dependency, version, folder);
             }
-            eventMessage.Invoke(contentFile);
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage.Invoke($"Se{dependency.pathPackageSettings} procesado");
+
 
             gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
             eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
