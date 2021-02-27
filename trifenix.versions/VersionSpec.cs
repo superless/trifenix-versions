@@ -498,15 +498,20 @@ namespace trifenix.versions
                     eventMessage.Invoke($"se actualizará {packageName} a {lastVersion} en {item.PackageName}");
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    UpdateGithub(item, lastVersion, eventMessage);
+                    var updated = UpdateGithub(item, lastVersion, eventMessage);
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
                     eventMessage.Invoke($"-------------------------------------------------------------------------------");
                     eventMessage.Invoke($"Guardando versión paquete, para llevar el rastro de las actualizaciones.");
+                    if (!updated)
+                    {   
+                        continue;
+                    }
                     var versionPackage = GetVersionStructure(item.PackageName, packageType);
                     var versionPackageVersion = Data.MapperCommitVersion.Map<CommitPackageVersion>(lastVersion);
                     versionPackageVersion.PackageName = packageName;
                     versionPackage.DependantVersions.Add(versionPackageVersion);
                     eventMessage.Invoke($"Se asigna la última versión de {packageName} a los paquetes dependientes de {item.PackageName} con la version {lastVersion}");
+                    
                     SaveVersionStructure(versionPackage);
 
 
@@ -520,10 +525,24 @@ namespace trifenix.versions
             }
         }
 
-        private void UpdateGithub(Dependency dependency, CommitVersion version, Action<string> eventMessage) {
+        private bool UpdateGithub(Dependency dependency, CommitVersion version, Action<string> eventMessage) {
             var gh = new GitHubRepo(dependency.GithubHttp, this.branch, this.userGithub, this.mail);
 
-            var folder = gh.Clone();
+            string folder = string.Empty;
+
+            try
+            {
+                folder = gh.Clone();
+            }
+            catch (Exception e)
+            {
+                                
+                eventMessage.Invoke($"{dependency.PackageName} fallo al clonar con la rama {branch}  desde {dependency.GithubHttp}");
+                eventMessage.Invoke($"este es el mensaje de error:");
+                eventMessage.Invoke($"{e.Message}");
+                return false;
+            }
+
             eventMessage.Invoke($"-------------------------------------------------------------------------------");
             eventMessage.Invoke($"{dependency.PackageName} es clonado en la carpeta temporal  desde {dependency.GithubHttp}");
             eventMessage.Invoke($"-------------------------------------------------------------------------------");
@@ -554,6 +573,7 @@ namespace trifenix.versions
 
             gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
             eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
+            return true;
         }
 
         public void SaveVersionStructure(VersionStructure versionStructure)
