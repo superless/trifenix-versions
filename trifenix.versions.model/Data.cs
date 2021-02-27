@@ -156,6 +156,28 @@ namespace trifenix.versions.model
 
             },
             new VersionStructure {
+                PackageName="trifenix.connect.bus",
+                GithubHttp="https://github.com/trifenix/trifenix-connect-bus.git",
+                GithubSsh="git@github.com:trifenix/trifenix-connect-bus.git",
+                PackageType= PackageType.nuget,
+                Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch= 47
+                        }
+                    }
+                },
+                
+
+            },
+            new VersionStructure {
                 PackageName="trifenix.connect.interfaces",
                 GithubHttp="https://github.com/trifenix/interfaces-connect.git",
                 GithubSsh="git@github.com:trifenix/interfaces-connect.git",
