@@ -223,7 +223,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic { // actual versión
                             Major = 0,
                             Minor = 8,
-                            Patch=110
+                            Patch=149
                         }
                     }
                 },
