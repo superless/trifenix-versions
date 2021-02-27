@@ -82,15 +82,33 @@ namespace trifenix.versions
         }
         
 
-        public VersionStructure GetVersionStructure(string name, PackageType type)
+        public VersionStructure GetVersionStructure(string name, PackageType type, Action<string> message, int intentos = 0)
         {
-            var githubStructure = repoVersion.GetElement($"{name}.{type}.json");
+            VersionStructure githubStructure;
+            try
+            {
+                githubStructure = repoVersion.GetElement($"{name}.{type}.json");
+            }
+            catch (Exception e)
+            {
+                message.Invoke("------------------------------------------------------------------");
+                message.Invoke($"error al obtener la estructura, nro : {intentos}");
+                message.Invoke("------------------------------------------------------------------");
+                message.Invoke($"{e.Message}");
+                message.Invoke("------------------------------------------------------------------");
+                if (intentos>=3)
+                {
+                    throw new Exception("error al obtener estructura después de 3 intentos fallidos");
+                }
+                return GetVersionStructure(name, type, message, intentos++);
+
+            }
             if (githubStructure != null) return githubStructure;
             var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(name));
             return defaultValue;
         }
 
-        public VersionStructure GetVersionStructure() => GetVersionStructure(packageName, packageType);
+        public VersionStructure GetVersionStructure(Action<string> message) => GetVersionStructure(packageName, packageType, message);
 
 
 
@@ -243,9 +261,8 @@ namespace trifenix.versions
 
        
 
-        public VersionStructure SetMainVersion(VersionStructure versionStructure)
-        {
-            var spec = GetVersionStructure();
+        public VersionStructure SetMainVersion(VersionStructure spec)
+        {   
             var newCommitVersion = GetNewCommitVersion(spec);
             spec.Versions.Add(newCommitVersion);
             return spec;
@@ -446,11 +463,11 @@ namespace trifenix.versions
 
 
 
-        public string SetVersion()
+        public string SetVersion(Action<string> message)
         {
             //
             
-            var version = SetMainVersion(GetVersionStructure());
+            var version = SetMainVersion(GetVersionStructure(message));
 
             var versTag = GetLastVersion(version, branch).ToString();
 
@@ -465,10 +482,12 @@ namespace trifenix.versions
 
         }
 
+        
+
         public void SetVersionToDependant(Action<string> eventMessage)
         {
             eventMessage.Invoke("Obteniendo estuctura del paquete desde github");
-            var structure = GetVersionStructure();
+            var structure = GetVersionStructure(eventMessage);
             eventMessage.Invoke($"{packageName} obtenido desde github");
 
 
@@ -482,7 +501,7 @@ namespace trifenix.versions
                 eventMessage.Invoke($"Dependencia : {item.PackageName}");
                 eventMessage.Invoke($"----------------------------------");
 
-                var struc = GetVersionStructure(item.PackageName, packageType);
+                var struc = GetVersionStructure(item.PackageName, packageType, eventMessage);
 
                 
 
@@ -506,7 +525,7 @@ namespace trifenix.versions
                     {   
                         continue;
                     }
-                    var versionPackage = GetVersionStructure(item.PackageName, packageType);
+                    var versionPackage = GetVersionStructure(item.PackageName, packageType, eventMessage);
                     var versionPackageVersion = Data.MapperCommitVersion.Map<CommitPackageVersion>(lastVersion);
                     versionPackageVersion.PackageName = packageName;
                     versionPackage.DependantVersions.Add(versionPackageVersion);
