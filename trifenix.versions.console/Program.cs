@@ -83,7 +83,7 @@ namespace trifenix.versions.console
 
             try
             {
-                var version = versionSpec.SetVersion();
+                var version = versionSpec.SetVersion((s)=> { });
                 System.Console.WriteLine(version);
             }
             catch (Exception ex)

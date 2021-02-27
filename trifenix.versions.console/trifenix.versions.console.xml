@@ -120,11 +120,11 @@
             </summary>
             <param name="args">usamos CommandLineParser para parsear las opciones</param>
         </member>
-        <member name="M:trifenix.versions.console.Program.Progragation(trifenix.arguments.Propagation)">
+        <member name="M:trifenix.versions.console.Program.ProgragationMethod(trifenix.arguments.Propagation)">
             <summary>
             Actualización del paquete en los distintas dependencias.
             </summary>
-            <param name="args"></param>
+            <param name="args">Argumentos de propagación, los mismos del update + build</param>
         </member>
     </members>
 </doc>
