@@ -84,26 +84,8 @@ namespace trifenix.versions
 
         public VersionStructure GetVersionStructure(string name, PackageType type, Action<string> message, int intentos = 0)
         {
-            VersionStructure githubStructure;
-            try
-            {
-                githubStructure = repoVersion.GetElement($"{name}.{type}.json");
-            }
-            catch (Exception e)
-            {
-                message.Invoke("------------------------------------------------------------------");
-                message.Invoke($"error al obtener la estructura, nro : {intentos}");
-                message.Invoke("------------------------------------------------------------------");
-                message.Invoke($"{e.Message}");
-                message.Invoke("------------------------------------------------------------------");
-                if (intentos>=3)
-                {
-                    throw new Exception("error al obtener estructura después de 3 intentos fallidos");
-                }
-                intentos = intentos++;
-                return GetVersionStructure(name, type, message, intentos);
-
-            }
+            message.Invoke($"obteniendo {name}.{type}");
+            var githubStructure = repoVersion.GetElement($"{name}.{type}.json");
             if (githubStructure != null) return githubStructure;
             var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(name));
             return defaultValue;
