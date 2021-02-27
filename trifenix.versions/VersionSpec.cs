@@ -215,7 +215,9 @@ namespace trifenix.versions
 
         public static string ToXmlString(XmlDocument xmlDoc) {
             using (var stringWriter = new StringWriter())
-            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { 
+                OmitXmlDeclaration=true
+            }))
             {
                 xmlDoc.WriteTo(xmlTextWriter);
                 xmlTextWriter.Flush();
@@ -570,7 +572,7 @@ namespace trifenix.versions
             else {
                 contentFile = SetCsProjNugetVersion(dependency, version, folder);
             }
-            eventMessage.Invoke($"Se{dependency.pathPackageSettings} procesado");
+            eventMessage.Invoke($"{dependency.pathPackageSettings} procesado");
 
 
             gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
