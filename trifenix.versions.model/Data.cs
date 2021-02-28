@@ -11,7 +11,7 @@ namespace trifenix.versions.model
     /// </summary>
     public static class Data
     {
-        // ok
+        // dependencies
 
         public static VersionStructure Interfaces = new VersionStructure
         {
@@ -92,29 +92,6 @@ namespace trifenix.versions.model
             }
         };
 
-        
-        public static VersionStructure Cosmos => new VersionStructure
-        {
-            PackageName = "trifenix.connect.db.cosmos",
-            GithubHttp = "https://github.com/trifenix/trifenix-cosmos-db.git",
-            GithubSsh = "git@github.com:trifenix/trifenix-cosmos-db.git",
-            PackageType = PackageType.nuget,
-            Versions = new List<CommitVersion>{
-                    new CommitVersion {
-                        Branch="master",
-                        DependantRelease=false,
-                        IsFeature=false,
-                        PreReleaseLabel=string.Empty,
-                        Preview=0,
-                        SemanticBaseVersion=new Semantic{ // actual versión
-                            Major = 0,
-                            Minor = 8,
-                            Patch= 54
-                        }
-                    }
-                }
-        };
-
         public static VersionStructure Exceptions => new VersionStructure
         {
             PackageName = "trifenix.exception",
@@ -149,6 +126,30 @@ namespace trifenix.versions.model
 
         };
 
+        public static VersionStructure Cosmos => new VersionStructure
+        {
+            PackageName = "trifenix.connect.db.cosmos",
+            GithubHttp = "https://github.com/trifenix/trifenix-cosmos-db.git",
+            GithubSsh = "git@github.com:trifenix/trifenix-cosmos-db.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch= 54
+                        }
+                    }
+                }
+        };
+
+        
+
 
 
 
@@ -172,17 +173,8 @@ namespace trifenix.versions.model
                             Patch= 86
                         }
                     }
-                },
-            Dependencies = new List<Dependency>{
-
-                    new Dependency{
-                        PackageName="trifenix.connect.bus",
-                        GithubHttp="https://github.com/trifenix/trifenix-connect-bus.git",
-                        GithubSsh="git@github.com:trifenix/trifenix-connect-bus.git",
-                        pathPackageSettings="trifenix.connect.bus.csproj"
-                    },
-
                 }
+           
 
         };
 
@@ -277,10 +269,36 @@ namespace trifenix.versions.model
                     GithubSsh="git@github.com:trifenix/connect-azr-search-model.git",
                     pathPackageSettings="trifenix.connect.mdm.search.model.csproj"
                 },
+                new Dependency{
+                    PackageName="trifenix.connect.bus",
+                    GithubHttp="https://github.com/trifenix/trifenix-connect-bus.git",
+                    GithubSsh="git@github.com:trifenix/trifenix-connect-bus.git",
+                    pathPackageSettings="trifenix.connect.bus.csproj"
+                }
             }
         };
 
-        // falta
+        public static VersionStructure External => new VersionStructure
+        {
+            PackageName = "trifenix.connect.interfaces.external",
+            GithubHttp = "https://github.com/trifenix/external-search-cosmos.git",
+            GithubSsh = "git@github.com:trifenix/external-search-cosmos.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch= 50
+                        }
+                    }
+                },
+        };
 
         public static VersionStructure Storage => new VersionStructure
         {
@@ -299,6 +317,28 @@ namespace trifenix.versions.model
                             Major = 0,
                             Minor = 8,
                             Patch= 47
+                        }
+                    }
+                }
+        };
+
+        public static VersionStructure Connectsearch = new VersionStructure
+        {
+            PackageName = "trifenix.connect.search", // los paquetes de npm usan trifenix al principio
+            GithubHttp = "https://github.com/trifenix/connect-search.git",
+            GithubSsh = "git@github.com:trifenix/connect-search.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion{
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic { // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch=47
                         }
                     }
                 }
@@ -348,7 +388,6 @@ namespace trifenix.versions.model
                 },
         };
 
-
         public static VersionStructure Graph => new VersionStructure
         {
             PackageName = "trifenix.connect.graph",
@@ -393,27 +432,6 @@ namespace trifenix.versions.model
                 },
         };
 
-        public static VersionStructure External => new VersionStructure
-        {
-            PackageName = "trifenix.connect.interfaces.external",
-            GithubHttp = "https://github.com/trifenix/external-search-cosmos.git",
-            GithubSsh = "git@github.com:trifenix/external-search-cosmos.git",
-            PackageType = PackageType.nuget,
-            Versions = new List<CommitVersion>{
-                    new CommitVersion {
-                        Branch="master",
-                        DependantRelease=false,
-                        IsFeature=false,
-                        PreReleaseLabel=string.Empty,
-                        Preview=0,
-                        SemanticBaseVersion=new Semantic{ // actual versión
-                            Major = 0,
-                            Minor = 8,
-                            Patch= 50
-                        }
-                    }
-                },
-        };
 
         public static VersionStructure Arguments => new VersionStructure
         {
@@ -450,9 +468,44 @@ namespace trifenix.versions.model
         };
 
 
-        
+        public static VersionStructure Mdmts => new VersionStructure
+        {
+            PackageName = "trifenix.connect.mdm.ts_model",
+            GithubHttp = "https://github.com/trifenix/mdm-ts.git",
+            GithubSsh = "git@github.com:trifenix/mdm-ts.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 11,
+                            Patch= 5
+                        }
+                    }
+                },
+        };
 
-        
+        // falta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public static VersionStructure MdmNpm = new VersionStructure
         {
@@ -485,27 +538,7 @@ namespace trifenix.versions.model
         };
 
 
-        public static VersionStructure Connectsearch = new VersionStructure
-        {
-            PackageName = "trifenix.connect.search", // los paquetes de npm usan trifenix al principio
-            GithubHttp = "https://github.com/trifenix/connect-search.git",
-            GithubSsh = "git@github.com:trifenix/connect-search.git",
-            PackageType = PackageType.nuget,
-            Versions = new List<CommitVersion>{
-                    new CommitVersion{
-                        Branch="master",
-                        DependantRelease=false,
-                        IsFeature=false,
-                        PreReleaseLabel=string.Empty,
-                        Preview=0,
-                        SemanticBaseVersion=new Semantic { // actual versión
-                            Major = 0,
-                            Minor = 8,
-                            Patch=47
-                        }
-}
-                }
-        };
+       
 
 
         /// <summary>
