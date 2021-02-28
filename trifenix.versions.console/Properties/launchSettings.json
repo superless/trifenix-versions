@@ -2,7 +2,7 @@
   "profiles": {
     "trifenix.versions.console": {
       "commandName": "Project",
-      "commandLineArgs": "update https://github.com/trifenix/versions.git --token 418de0be5441a16651a2c172f106cf0dcc16abaf --user devops --email devops@trifenix.io --branch  master  --name trifenix.connect.mdm --ktype nuget --build x "
+      "commandLineArgs": "propagation https://github.com/trifenix/versions.git --token 00245ee2c648ece25ac4107b859212d7c1196458 --user devops --email devops@trifenix.io --branch  feature/hello-world --name trifenix.connect.mdm --ktype nuget"
     }
   }
 }
