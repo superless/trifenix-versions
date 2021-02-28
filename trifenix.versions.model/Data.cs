@@ -448,7 +448,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos
+            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch
 
 
          };
