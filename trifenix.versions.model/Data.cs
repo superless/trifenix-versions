@@ -82,6 +82,13 @@ namespace trifenix.versions.model
                     GithubSsh="git@github.com:trifenix/connect.git",
                     pathPackageSettings="connect/trifenix.connect.csproj"
                 },
+                
+                new Dependency{
+                    PackageName = "trifenix.connect.interfaces.external",
+                    GithubHttp = "https://github.com/trifenix/external-search-cosmos.git",
+                    GithubSsh = "git@github.com:trifenix/external-search-cosmos.git",            
+                    pathPackageSettings="trifenix.connect.interfaces.external.csproj"
+                },
             }
         };
 
@@ -386,6 +393,28 @@ namespace trifenix.versions.model
                 },
         };
 
+        public static VersionStructure External => new VersionStructure
+        {
+            PackageName = "trifenix.connect.interfaces.external",
+            GithubHttp = "https://github.com/trifenix/external-search-cosmos.git",
+            GithubSsh = "git@github.com:trifenix/external-search-cosmos.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 8,
+                            Patch= 50
+                        }
+                    }
+                },
+        };
+
         public static VersionStructure Arguments => new VersionStructure
         {
             PackageName = "trifenix.connect.arguments",
@@ -484,7 +513,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage
+            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External
 
 
          };
