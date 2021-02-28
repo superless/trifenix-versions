@@ -215,19 +215,7 @@ namespace trifenix.versions.model
                             Patch= 54
                         }
                     }
-                },
-            Dependencies = new List<Dependency>{
-
-                    new Dependency{
-                         PackageName = "trifenix.connect",
-                        GithubHttp = "https://github.com/trifenix/connect.git",
-                        GithubSsh = "git@github.com:trifenix/connect.git",
-                        pathPackageSettings="trifenix.connect.csproj"
-                    }
-
-
                 }
-
         };
 
 
@@ -460,7 +448,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions
+            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos
 
 
          };
