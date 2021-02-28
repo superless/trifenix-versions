@@ -173,8 +173,18 @@ namespace trifenix.versions.model
                             Patch= 86
                         }
                     }
+                },
+                 Dependencies = new List<Dependency>{
+
+                    new Dependency{
+                        PackageName = "mdm-cli",
+                        GithubHttp = "https://github.com/trifenix/mdm-cli.git",
+                        GithubSsh = "git@github.com:trifenix/mdm-cli.git",
+                        pathPackageSettings="mdm-cli.csproj"
+                    }
+
+
                 }
-           
 
         };
 
@@ -491,6 +501,50 @@ namespace trifenix.versions.model
         };
 
         // falta
+        public static VersionStructure mdmcli => new VersionStructure
+        {
+            PackageName = "mdm-cli",
+            GithubHttp = "https://github.com/trifenix/mdm-cli.git",
+            GithubSsh = "git@github.com:trifenix/mdm-cli.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 12,
+                            Patch= 5
+                        }
+                    }
+                },
+        };
+
+
+        public static VersionStructure AgroDataNuget => new VersionStructure
+        {
+            PackageName = "trifenix.connect.agro",
+            GithubHttp = "https://github.com/trifenix/trifenix.connect.agro.git",
+            GithubSsh = "git@github.com:trifenix/trifenix.connect.agro.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 0,
+                            Patch= 0
+                        }
+                    }
+                },
+        };
 
 
 
@@ -502,10 +556,27 @@ namespace trifenix.versions.model
 
 
 
-
-
-
-
+        public static VersionStructure agroData = new VersionStructure
+        {
+            PackageName = "@trifenix/agro-data",
+            GithubHttp = "https://github.com/trifenix/agro-data.git",
+            GithubSsh = "git@github.com:trifenix/agro-data.git",
+            
+            Versions = new List<CommitVersion>{
+                    new CommitVersion{
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic { // actual versión
+                            Major = 0,
+                            Minor = 1,
+                            Patch=26
+                        }
+}
+                }
+        };
 
         public static VersionStructure MdmNpm = new VersionStructure
         {
@@ -546,7 +617,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External
+            Arguments, Connect,SearchModel, Bus, Mdm,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
 
 
          };
