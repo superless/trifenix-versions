@@ -488,6 +488,14 @@ namespace trifenix.versions
             var lastVersion = GetLastVersion(structure, branch);
             eventMessage.Invoke($"la última versión de {packageName} es {lastVersion}");
 
+            if (structure.Dependencies == null || !structure.Dependencies.Any() )
+            {
+                eventMessage.Invoke($"----------------------------------");
+                eventMessage.Invoke($"No se encontraron dependencias para : {packageName}");
+                eventMessage.Invoke($"----------------------------------");
+                return;
+            }
+
             foreach (var item in structure.Dependencies)
             {
                 eventMessage.Invoke($"----------------------------------");
