@@ -447,7 +447,7 @@ namespace trifenix.versions
 
 
 
-            var maxSemanticVersions = version.Versions.Where(s => s.SemanticBaseVersion.Equals(maxSemantinc));
+            var maxSemanticVersions = versions.Where(s => s.SemanticBaseVersion.Equals(maxSemantinc));
 
             var lastDate = maxSemanticVersions.Max(s => s.LastUpdate);
 
@@ -479,6 +479,9 @@ namespace trifenix.versions
 
         public void SetVersionToDependant(Action<string> eventMessage)
         {
+
+            eventMessage.Invoke($"Creando dependencias para {branch}");
+            eventMessage.Invoke($"-----------------------------------");
             eventMessage.Invoke("Obteniendo estuctura del paquete desde github");
             var structure = GetVersionStructure(eventMessage);
             eventMessage.Invoke($"{packageName} obtenido desde github");
