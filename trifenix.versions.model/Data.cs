@@ -146,6 +146,15 @@ namespace trifenix.versions.model
                         }
                     }
                 }
+            ,
+            Dependencies = new List<Dependency> { 
+                new Dependency{
+                    PackageName = "trifenix.connect.agro",
+                    GithubHttp = "https://github.com/trifenix/trifenix.connect.agro.git",
+                    GithubSsh = "git@github.com:trifenix/trifenix.connect.agro.git",
+                    pathPackageSettings = "trifenix.connect.agro.csproj"
+                }
+            }
         };
 
         
