@@ -547,8 +547,8 @@ namespace trifenix.versions.model
         public static VersionStructure gitInterfaces => new VersionStructure
         {
             PackageName = "trifenix.git.interfaces",
-            GithubHttp = "https://github.com/trifenix/trifenix.git.interfaces.git",
-            GithubSsh = "git@github.com:trifenix/trifenix.git.interfaces.git",
+            GithubHttp = "https://github.com/trifenix/git-interface.git",
+            GithubSsh = "git@github.com:trifenix/git-interface.git",
             PackageType = PackageType.nuget,
             Versions = new List<CommitVersion>{
                     new CommitVersion {
@@ -560,7 +560,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic{ // actual versión
                             Major = 0,
                             Minor = 0,
-                            Patch= 0
+                            Patch= 2
                         }
                     }
                 },
@@ -568,8 +568,8 @@ namespace trifenix.versions.model
 
                     new Dependency{
                         PackageName = "trifenix.git",
-                        GithubHttp = "https://github.com/trifenix/trifenix.git.git",
-                        GithubSsh = "git@github.com:trifenix/trifenix.git.git",
+                        GithubHttp = "https://github.com/trifenix/trifenix-git.git",
+                        GithubSsh = "git@github.com:trifenix/trifenix-git.git",
                         pathPackageSettings="trifenix.git.csproj"
                     }
 
@@ -580,8 +580,8 @@ namespace trifenix.versions.model
         public static VersionStructure git => new VersionStructure
         {
             PackageName = "trifenix.git",
-            GithubHttp = "https://github.com/trifenix/trifenix.git.git",
-            GithubSsh = "git@github.com:trifenix/trifenix.git.git",
+            GithubHttp = "https://github.com/trifenix/trifenix-git.git",
+            GithubSsh = "git@github.com:trifenix/trifenix-git.git",
             PackageType = PackageType.nuget,
             Versions = new List<CommitVersion>{
                     new CommitVersion {
@@ -593,7 +593,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic{ // actual versión
                             Major = 0,
                             Minor = 0,
-                            Patch= 0
+                            Patch= 2
                         }
                     }
                 },
