@@ -609,6 +609,16 @@ namespace trifenix.versions
                     Thread.Sleep(2000);
                     gh.Cloned = string.Empty;
                     intentos++;
+                    if (packageType == PackageType.npm)
+                    {
+                        contentFile = SetPackageJsonNpmVersion(dependency, version, folder);
+
+                    }
+                    else
+                    {
+                        contentFile = SetCsProjNugetVersion(dependency, version, folder);
+                    }
+
                     eventMessage.Invoke($"Se limpia carpeta temporal para reintento = {intentos}");
 
                 } 
