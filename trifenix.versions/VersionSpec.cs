@@ -10,6 +10,7 @@ using trifenix.versions.interfaces;
 using trifenix.versions.model;
 using Microsoft.XmlDiffPatch;
 using trifenix.git;
+using System.Threading;
 
 namespace trifenix.versions
 {
@@ -592,8 +593,34 @@ namespace trifenix.versions
             }
             eventMessage.Invoke($"{dependency.pathPackageSettings} procesado");
 
+            Exception exception = null;
 
-            gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
+            var intentos = 0;
+
+            while (intentos <= 3)
+            {
+                try
+                {
+                    gh.SaveFile(dependency.pathPackageSettings, $"{packageName}.{version}", contentFile);
+                }
+                catch (Exception exc)
+                {
+                    exception = exc;
+                    Thread.Sleep(2000);
+                    gh.Cloned = string.Empty;
+                    intentos++;
+                    eventMessage.Invoke($"Se limpia carpeta temporal para reintento = {intentos}");
+
+                } 
+
+
+            }
+            if (exception!=null)
+            {
+                throw exception;
+            }
+
+            
             eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
             return true;
         }
