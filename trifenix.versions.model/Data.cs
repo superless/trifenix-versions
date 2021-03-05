@@ -555,6 +555,27 @@ namespace trifenix.versions.model
                 },
         };
 
+        public static VersionStructure gitInterfaces => new VersionStructure
+        {
+            PackageName = "trifenix.git.interfaces",
+            GithubHttp = "https://github.com/trifenix/trifenix.git.interfaces.git",
+            GithubSsh = "git@github.com:trifenix/trifenix.git.interfaces.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 0,
+                            Patch= 0
+                        }
+                    }
+                },
+        };
 
 
 
