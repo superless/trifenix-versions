@@ -581,7 +581,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic { // actual versión
                             Major = 0,
                             Minor = 1,
-                            Patch=26
+                            Patch=30
                         }
 }
                 }
@@ -603,7 +603,7 @@ namespace trifenix.versions.model
                         SemanticBaseVersion=new Semantic { // actual versión
                             Major = 1,
                             Minor = 6,
-                            Patch=24
+                            Patch=26
                         }
 }
                 },
@@ -616,6 +616,7 @@ namespace trifenix.versions.model
                     }
                 }
         };
+
 
 
        
