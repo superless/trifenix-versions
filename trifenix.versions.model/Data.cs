@@ -567,7 +567,7 @@ namespace trifenix.versions.model
 
         public static VersionStructure agroData = new VersionStructure
         {
-            PackageName = "@trifenix/agro-data",
+            PackageName = "trifenix_agro-data",
             GithubHttp = "https://github.com/trifenix/agro-data.git",
             GithubSsh = "git@github.com:trifenix/agro-data.git",
             
@@ -589,7 +589,7 @@ namespace trifenix.versions.model
 
         public static VersionStructure MdmNpm = new VersionStructure
         {
-            PackageName = "trifenix/mdm", // los paquetes de npm usan trifenix al principio
+            PackageName = "trifenix_mdm", // los paquetes de npm usan trifenix al principio
             GithubHttp = "https://github.com/trifenix/mdm-auto-npm-model.git",
             GithubSsh = "git@github.com:trifenix/mdm-auto-npm-model.git",
             PackageType = PackageType.npm,
