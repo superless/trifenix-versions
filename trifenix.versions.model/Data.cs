@@ -575,6 +575,39 @@ namespace trifenix.versions.model
                         }
                     }
                 },
+            Dependencies = new List<Dependency>{
+
+                    new Dependency{
+                        PackageName = "trifenix.git",
+                        GithubHttp = "https://github.com/trifenix/trifenix.git.git",
+                        GithubSsh = "git@github.com:trifenix/trifenix.git.git",
+                        pathPackageSettings="trifenix.git.csproj"
+                    }
+
+
+                }
+        };
+
+        public static VersionStructure git => new VersionStructure
+        {
+            PackageName = "trifenix.git",
+            GithubHttp = "https://github.com/trifenix/trifenix.git.git",
+            GithubSsh = "git@github.com:trifenix/trifenix.git.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 0,
+                            Patch= 0
+                        }
+                    }
+                },
         };
 
 
@@ -648,7 +681,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
+            Arguments, Connect,gitInterfaces, SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
 
 
          };
