@@ -128,13 +128,13 @@ namespace trifenix.versions.tests.mock
                     "develop",
                     "build.devops",
                     "token.github",
-                    "@trifenix/mdm",
+                    "trifenix_mdm",
                     PackageType.npm,
                     false,
                     "devops@trifenix.io",
                     "devops",
                     Mock.GitRepo(),
-                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
+                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix_mdm"))),
                     Data.Packages.ToList()
                 );
 
@@ -144,13 +144,13 @@ namespace trifenix.versions.tests.mock
                     "test-branch",
                     "build.devops",
                     "token.github",
-                    "trifenix@mdm",
+                    "trifenix_mdm",
                     PackageType.npm,
                     true,
                     "devops@trifenix.io",
                     "devops",
                     Mock.GitRepo(),
-                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
+                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix_mdm"))),
                     Data.Packages.ToList()
                 );
 
@@ -160,13 +160,13 @@ namespace trifenix.versions.tests.mock
                     "release",
                     "build.devops",
                     "token.github",
-                    "trifenix@mdm",
+                    "trifenix_mdm",
                     PackageType.npm,
                     true,
                     "devops@trifenix.io",
                     "devops",
                     Mock.GitRepo(),
-                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix@mdm"))),
+                    Mock.GitRepoVersionStructure(Data.Packages.First(s => s.PackageName.Equals("trifenix_mdm"))),
                     Data.Packages.ToList()
                 );
 

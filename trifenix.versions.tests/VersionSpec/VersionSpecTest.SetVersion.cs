@@ -12,7 +12,7 @@ namespace trifenix.versions.tests
             public void SetVersionMasterCheckVersion() {
                 var spec = TestData.Instances.Default;
 
-                var version = spec.SetVersion();
+                var version = spec.SetVersion(null);
 
                 Assert.Equal("0.8.87", version);
             }
@@ -22,7 +22,7 @@ namespace trifenix.versions.tests
             {
                 var spec = TestData.Instances.DevelopRelease;
 
-                var version = spec.SetVersion();
+                var version = spec.SetVersion(null);
 
                 Assert.Equal("0.8.13-preview.1", version);
             }

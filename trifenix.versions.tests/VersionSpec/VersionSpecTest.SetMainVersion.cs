@@ -14,11 +14,11 @@ namespace trifenix.versions.tests
                 var spec = TestData.Instances.Default;
 
                 var package = Data.Mapper.Map<VersionStructure>(Data.Packages.First(s => s.PackageName.Equals("trifenix.connect")));
-                var version = spec.SetMainVersion(package);
 
-                var currentPatch = package.Versions.Where(s => s.Branch.Equals("master")).Max(s => s.SemanticBaseVersion.Patch);
+                var lastPackageVersion = package.Versions.Where(s => s.Branch.Equals("master")).Max(s => s.SemanticBaseVersion.Patch);
+                var version = spec.SetMainVersion(package);
                 var newPatch = version.Versions.Where(s => s.Branch.Equals("master")).Max(s => s.SemanticBaseVersion.Patch);
-                Assert.Equal(currentPatch + 1, newPatch);
+                Assert.Equal(lastPackageVersion + 1, newPatch);
             }
 
             [Fact]

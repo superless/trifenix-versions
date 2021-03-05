@@ -18,7 +18,7 @@ namespace trifenix.versions.tests.mock
                 Func<string, string> get = (path) =>
                 {
                     Log.AppendLine($"get => path : {path}");
-                    return $"get => path : {path}";
+                    return null;
                 };
                 Action <IEnumerable<Func<bool>>, string> commit = (operations, branch) =>
                 {
