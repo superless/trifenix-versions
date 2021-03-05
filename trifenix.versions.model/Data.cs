@@ -670,7 +670,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,gitInterfaces, SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
+            Arguments, Connect,gitInterfaces, git , SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
 
 
          };
