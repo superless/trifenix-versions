@@ -83,9 +83,9 @@ namespace trifenix.versions
         }
         
 
-        public VersionStructure GetVersionStructure(string name, PackageType type, Action<string> message, int intentos = 0)
+        public VersionStructure GetVersionStructure(string name, PackageType type, Action<string> message)
         {
-            message.Invoke($"obteniendo {name}.{type}");
+            message?.Invoke($"obteniendo {name}.{type}");
             var githubStructure = repoVersion.GetElement($"{name}.{type}.json");
             var defaultValue = defaultVersions.FirstOrDefault(s => s.PackageName.Equals(name));
 
@@ -115,12 +115,16 @@ namespace trifenix.versions
 
             var dependenciesArray = jobject["dependencies"];
 
+            var divisor = packageName.Split('_');
+
+            var packageJson = $"@{divisor[0]}/{divisor[1]}";
+
             if (dependenciesArray!= null&&dependenciesArray.HasValues)
             {
-                var packageExists = dependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageName));
+                var packageExists = dependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageJson));
                 if (packageExists)
                 {
-                    var tkn = (JProperty)dependenciesArray.First(s => ((JProperty)s).Name.Equals(packageName));
+                    var tkn = (JProperty)dependenciesArray.First(s => ((JProperty)s).Name.Equals(packageJson));
                     tkn.Value = $"^{version}";
                     
 
@@ -131,10 +135,10 @@ namespace trifenix.versions
 
             if (devDependenciesArray!=null && devDependenciesArray.HasValues)
             {
-                var packageExists = devDependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageName));
+                var packageExists = devDependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageJson));
                 if (packageExists)
                 {
-                    var tkn = (JProperty)devDependenciesArray.First(s => ((JProperty)s).Name.Equals(packageName));
+                    var tkn = (JProperty)devDependenciesArray.First(s => ((JProperty)s).Name.Equals(packageJson));
                     tkn.Value = $"^{version}";
 
 
@@ -145,10 +149,10 @@ namespace trifenix.versions
 
             if (peerDependenciesArray!=null && peerDependenciesArray.HasValues)
             {
-                var packageExists = peerDependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageName));
+                var packageExists = peerDependenciesArray.Any(s => ((JProperty)s).Name.Equals(packageJson));
                 if (packageExists)
                 {
-                    var tkn = (JProperty)peerDependenciesArray.First(s => ((JProperty)s).Name.Equals(packageName));
+                    var tkn = (JProperty)peerDependenciesArray.First(s => ((JProperty)s).Name.Equals(packageJson));
                     tkn.Value = $"^{version}";
 
 
@@ -481,30 +485,32 @@ namespace trifenix.versions
         public void SetVersionToDependant(Action<string> eventMessage)
         {
 
-            eventMessage.Invoke($"Creando dependencias para {branch}");
-            eventMessage.Invoke($"-----------------------------------");
-            eventMessage.Invoke("Obteniendo estuctura del paquete desde github");
+            eventMessage?.Invoke($"Creando dependencias para {branch}");
+            eventMessage?.Invoke($"-----------------------------------");
+            eventMessage?.Invoke("Obteniendo estuctura del paquete desde github");
             var structure = GetVersionStructure(eventMessage);
-            eventMessage.Invoke($"{packageName} obtenido desde github");
+            eventMessage?.Invoke($"{packageName} obtenido desde github");
 
 
             // última versión de la rama actual.
             var lastVersion = GetLastVersion(structure, branch);
-            eventMessage.Invoke($"la última versión de {packageName} es {lastVersion}");
+            eventMessage?.Invoke($"la última versión de {packageName} es {lastVersion}");
 
             if (structure.Dependencies == null || !structure.Dependencies.Any() )
             {
-                eventMessage.Invoke($"----------------------------------");
-                eventMessage.Invoke($"No se encontraron dependencias para : {packageName}");
-                eventMessage.Invoke($"----------------------------------");
+                eventMessage?.Invoke($"----------------------------------");
+                eventMessage?.Invoke($"No se encontraron dependencias para : {packageName}");
+                eventMessage?.Invoke($"----------------------------------");
                 return;
             }
 
+            var updated = false;
+
             foreach (var item in structure.Dependencies)
             {
-                eventMessage.Invoke($"----------------------------------");
-                eventMessage.Invoke($"Dependencia : {item.PackageName}");
-                eventMessage.Invoke($"----------------------------------");
+                eventMessage?.Invoke($"----------------------------------");
+                eventMessage?.Invoke($"Dependencia : {item.PackageName}");
+                eventMessage?.Invoke($"----------------------------------");
 
                 var struc = GetVersionStructure(item.PackageName, packageType, eventMessage);
 
@@ -512,20 +518,32 @@ namespace trifenix.versions
 
                 var last = GetLastVersion(struc, branch);
 
-                eventMessage.Invoke($"La version actual de la dependencia es {item.PackageName} es {(last==null?"[no registrada]":last.ToString())}");
+                eventMessage?.Invoke($"La version actual de la dependencia es {item.PackageName} es {(last==null?"[no registrada]":last.ToString())}");
 
 
                 if (last == null || last.DependantRelease == releaseDependant)
                 {
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    eventMessage.Invoke($"se actualizará {packageName} a {lastVersion} en {item.PackageName}");
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    var updated = UpdateGithub(item, lastVersion, eventMessage);
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    eventMessage.Invoke($"-------------------------------------------------------------------------------");
-                    eventMessage.Invoke($"Guardando versión paquete, para llevar el rastro de las actualizaciones.");
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage?.Invoke($"se actualizará {packageName} a {lastVersion} en {item.PackageName}");
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    try
+                    {
+                        updated = UpdateGithub(item, lastVersion, eventMessage);
+                    }
+                    catch (Exception exc)
+                    {
+                        eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                        eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                        eventMessage?.Invoke($"El intento de actualización resultó en {exc.Message} para {packageName} a {lastVersion} en {item.PackageName}");
+                        eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                        eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                        continue;
+                    }
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+                    eventMessage?.Invoke($"Guardando versión paquete, para llevar el rastro de las actualizaciones.");
                     if (!updated)
                     {   
                         continue;
@@ -534,7 +552,7 @@ namespace trifenix.versions
                     var versionPackageVersion = Data.MapperCommitVersion.Map<CommitPackageVersion>(lastVersion);
                     versionPackageVersion.PackageName = packageName;
                     versionPackage.DependantVersions.Add(versionPackageVersion);
-                    eventMessage.Invoke($"Se asigna la última versión de {packageName} a los paquetes dependientes de {item.PackageName} con la version {lastVersion}");
+                    eventMessage?.Invoke($"Se asigna la última versión de {packageName} a los paquetes dependientes de {item.PackageName} con la version {lastVersion}");
                     
                     SaveVersionStructure(versionPackage);
 
@@ -543,7 +561,7 @@ namespace trifenix.versions
                     
                 }
                 else {
-                    eventMessage.Invoke($"{item.PackageName} ya estableció su continuidad (master/release)  debe cambiar dependant o crear un nuevo release de  {packageName}");
+                    eventMessage?.Invoke($"{item.PackageName} ya estableció su continuidad (master/release)  debe cambiar dependant o crear un nuevo release de  {packageName}");
                 }   
                 
             }
@@ -560,29 +578,29 @@ namespace trifenix.versions
             }
             catch (Exception e)
             {
-                                
-                eventMessage.Invoke($"{dependency.PackageName} fallo al clonar con la rama {branch}  desde {dependency.GithubHttp}");
-                eventMessage.Invoke($"este es el mensaje de error:");
-                eventMessage.Invoke($"{e.Message}");
+
+                eventMessage?.Invoke($"{dependency.PackageName} fallo al clonar con la rama {branch}  desde {dependency.GithubHttp}");
+                eventMessage?.Invoke($"este es el mensaje de error:");
+                eventMessage?.Invoke($"{e.Message}");
                 return false;
             }
 
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
-            eventMessage.Invoke($"{dependency.PackageName} es clonado en la carpeta temporal  desde {dependency.GithubHttp}");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
-            eventMessage.Invoke($"{folder}");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
-            eventMessage.Invoke($" Desde url Github : {dependency.GithubHttp}");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($"{dependency.PackageName} es clonado en la carpeta temporal  desde {dependency.GithubHttp}");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($"{folder}");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($" Desde url Github : {dependency.GithubHttp}");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
            
 
 
 
 
             string contentFile;
-            eventMessage.Invoke($"Se obtiene {dependency.pathPackageSettings}");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
-            eventMessage.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($"Se obtiene {dependency.pathPackageSettings}");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
+            eventMessage?.Invoke($"-------------------------------------------------------------------------------");
             if (packageType == PackageType.npm)
             {   
                 contentFile = SetPackageJsonNpmVersion(dependency, version, folder);
@@ -591,7 +609,7 @@ namespace trifenix.versions
             else {
                 contentFile = SetCsProjNugetVersion(dependency, version, folder);
             }
-            eventMessage.Invoke($"{dependency.pathPackageSettings} procesado");
+            eventMessage?.Invoke($"{dependency.pathPackageSettings} procesado");
 
             Exception exception = null;
 
@@ -605,6 +623,10 @@ namespace trifenix.versions
                 }
                 catch (Exception exc)
                 {
+                    if (exc.Message.ToLower().Contains("nothing to commit"))
+                    {
+                        break;
+                    }
                     exception = exc;
                     Thread.Sleep(2000);
                     gh.Cloned = string.Empty;
@@ -619,7 +641,7 @@ namespace trifenix.versions
                         contentFile = SetCsProjNugetVersion(dependency, version, folder);
                     }
 
-                    eventMessage.Invoke($"Se limpia carpeta temporal para reintento = {intentos}");
+                    eventMessage?.Invoke($"Se limpia carpeta temporal para reintento = {intentos}, mensaje  = {exc.Message}");
 
                 } 
 
@@ -630,8 +652,8 @@ namespace trifenix.versions
                 throw exception;
             }
 
-            
-            eventMessage.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
+
+            eventMessage?.Invoke($"El paquete {dependency.PackageName} ha actualizado {packageName} a {version}");
             return true;
         }
 
