@@ -631,6 +631,20 @@ namespace trifenix.versions
                     Thread.Sleep(2000);
                     gh.Cloned = string.Empty;
                     intentos++;
+                    try
+                    {
+                        folder = gh.Clone();
+                    }
+                    catch (Exception e)
+                    {
+
+                        eventMessage?.Invoke($"{dependency.PackageName} fallo al clonar con la rama {branch}  desde {dependency.GithubHttp}");
+                        eventMessage?.Invoke($"este es el mensaje de error:");
+                        eventMessage?.Invoke($"{e.Message}");
+                    }
+
+
+
                     if (packageType == PackageType.npm)
                     {
                         contentFile = SetPackageJsonNpmVersion(dependency, version, folder);
