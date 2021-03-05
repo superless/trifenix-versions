@@ -182,17 +182,6 @@ namespace trifenix.versions.model
                             Patch= 86
                         }
                     }
-                },
-                 Dependencies = new List<Dependency>{
-
-                    new Dependency{
-                        PackageName = "mdm-cli",
-                        GithubHttp = "https://github.com/trifenix/mdm-cli.git",
-                        GithubSsh = "git@github.com:trifenix/mdm-cli.git",
-                        pathPackageSettings="mdm-cli.csproj"
-                    }
-
-
                 }
 
         };
