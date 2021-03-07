@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\trifenix.versions.model\trifenix.versions.model.csproj" />
+    <PackageReference Include="trifenix.versions.model" Version="0.0.2" />
   </ItemGroup>
 
 </Project>
