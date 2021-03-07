@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\trifenix.versions.model\trifenix.versions.model.csproj" />
     <ProjectReference Include="..\trifenix.versions\trifenix.versions.csproj" />
   </ItemGroup>
 
