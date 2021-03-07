@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using trifenix.versions.model;
 
-namespace trifenix.versions.model
+namespace trifenix.versions
 {
     /// <summary>
     /// Información usada en los tests
@@ -598,7 +598,27 @@ namespace trifenix.versions.model
                     }
                 },
         };
-
+        public static VersionStructure modelVersions => new VersionStructure
+        {
+            PackageName = "trifenix.versions.model",
+            GithubHttp = "https://github.com/trifenix/trifenix.versions.model.git",
+            GithubSsh = "git@github.com:trifenix/trifenix.versions.model.git",
+            PackageType = PackageType.nuget,
+            Versions = new List<CommitVersion>{
+                    new CommitVersion {
+                        Branch="master",
+                        DependantRelease=false,
+                        IsFeature=false,
+                        PreReleaseLabel=string.Empty,
+                        Preview=0,
+                        SemanticBaseVersion=new Semantic{ // actual versión
+                            Major = 0,
+                            Minor = 0,
+                            Patch= 0
+                        }
+                    }
+                },
+        };
 
 
 
@@ -670,7 +690,7 @@ namespace trifenix.versions.model
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,gitInterfaces, git , SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
+            Arguments, Connect,gitInterfaces, modelVersions, git , SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
 
 
          };
