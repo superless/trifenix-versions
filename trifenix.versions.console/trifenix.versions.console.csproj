@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>0.0.50</Version>
+    <Version>0.0.51</Version>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageIcon>logo.png</PackageIcon>
     <Company>Trifenix</Company>
