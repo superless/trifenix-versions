@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="trifenix.git" Version="0.0.7" />
-    <PackageReference Include="trifenix.versions.model" Version="0.0.4" />
+    <PackageReference Include="trifenix.versions.model" Version="0.0.5" />
     <PackageReference Include="XMLDiffPatch" Version="1.0.8.28" />
   </ItemGroup>
 
