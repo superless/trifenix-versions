@@ -441,6 +441,24 @@ namespace trifenix.versions
 
 
 
+        private static CommitVersion[] GetLastVersion(VersionStructure version, string branch, int number) {
+
+            var commitVersion = new List<CommitVersion>();
+
+            
+
+            var end = version.Versions.Count< number?version.Versions.Count: number;
+
+            for (int i = 0; i < end; i++)
+            {
+                var lastVersion = GetLastVersion(version, branch);
+                version.Versions.Remove(lastVersion);
+                commitVersion.Add(lastVersion);
+            }
+
+            return commitVersion.ToArray();
+        }
+
         private static CommitVersion GetLastVersion(VersionStructure version, string branch) {
 
             
@@ -471,10 +489,11 @@ namespace trifenix.versions
 
             var tag = $"{packageName}.{versTag}";
 
-            
-            var refactorVersions = version.Versions.Where(s => s.LastUpdate != null && s.Branch.Equals(branch)).OrderByDescending(s => s.LastUpdate).Take(5).ToList();
-            
-            version.Versions = refactorVersions;
+
+            var refactorVersions = GetLastVersion(version, branch, 5);
+
+
+            version.Versions = refactorVersions.ToList();
 
             var fileFullpath = utils.GetPackageFullPath(string.Empty, packageName, packageType);
 
