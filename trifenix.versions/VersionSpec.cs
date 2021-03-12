@@ -472,6 +472,10 @@ namespace trifenix.versions
             var tag = $"{packageName}.{versTag}";
 
             
+            var refactorVersions = version.Versions.Where(s => s.LastUpdate != null && s.Branch.Equals(branch)).OrderByDescending(s => s.LastUpdate).Take(5).ToList();
+            message($"Se encontraron {version.Versions.Count} versiones, se tomarán solo {refactorVersions.Count}");
+            version.Versions = refactorVersions;
+
             var fileFullpath = utils.GetPackageFullPath(string.Empty, packageName, packageType);
 
             repoVersion.SaveFile(fileFullpath, tag, version);
@@ -549,8 +553,19 @@ namespace trifenix.versions
                         continue;
                     }
                     var versionPackage = GetVersionStructure(item.PackageName, packageType, eventMessage);
+
+
                     var versionPackageVersion = Data.MapperCommitVersion.Map<CommitPackageVersion>(lastVersion);
                     versionPackageVersion.PackageName = packageName;
+                    
+                    var dependantRemove = versionPackage.DependantVersions.Where(s => s.Branch.Equals(versionPackageVersion.Branch) && s.PackageName.Equals(packageName)).ToList();
+                    eventMessage?.Invoke($"Se encontraron {dependantRemove.Count} para eliminar");
+                    foreach (var removeDependant in dependantRemove)
+                    {
+                        versionPackage.DependantVersions.Remove(removeDependant);
+                        eventMessage?.Invoke($"eliminando {removeDependant}");
+                    }
+
                     versionPackage.DependantVersions.Add(versionPackageVersion);
                     eventMessage?.Invoke($"Se asigna la última versión de {packageName} a los paquetes dependientes de {item.PackageName} con la version {lastVersion}");
                     
