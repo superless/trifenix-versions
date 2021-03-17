@@ -20,12 +20,7 @@ variables:
 pr: none
   
 steps:
-  - task: SonarQubePrepare@4
-    inputs:
-      SonarQube: 'AGROFENIX-V'
-      scannerMode: 'MSBuild'
-      projectKey: 'AGROFENIX-V'
-      projectName: 'AGROFENIX-V'
+
 
   
   # toma todos los proyectos que existan además de quien tiene el nuget.
@@ -45,10 +40,8 @@ steps:
       command: pack
       packagesToPack: '**/$(name-project).csproj'       
       arguments: '--configuration $(BuildConfiguration)'
-  - task: SonarQubeAnalyze@4
-  - task: SonarQubePublish@4
-    inputs:
-      pollingTimeoutSec: '300'
+
+
 
   # publica paquete para publicar.
   - task: PublishBuildArtifacts@1
