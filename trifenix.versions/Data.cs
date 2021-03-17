@@ -92,40 +92,7 @@ namespace trifenix.versions
             }
         };
 
-        public static VersionStructure Exceptions => new VersionStructure
-        {
-            PackageName = "trifenix.exception",
-            GithubHttp = "https://github.com/trifenix/trifenix.exception.git",
-            GithubSsh = "git@github.com:trifenix/trifenix.exception.git",
-            PackageType = PackageType.nuget,
-            Versions = new List<CommitVersion>{
-                    new CommitVersion {
-                        Branch="master",
-                        DependantRelease=false,
-                        IsFeature=false,
-                        PreReleaseLabel=string.Empty,
-                        Preview=0,
-                        SemanticBaseVersion=new Semantic{ // actual versión
-                            Major = 0,
-                            Minor = 1,
-                            Patch= 31
-                        }
-                    }
-                },
-            Dependencies = new List<Dependency>{
-
-                    new Dependency{
-                         PackageName = "trifenix.connect",
-                        GithubHttp = "https://github.com/trifenix/connect.git",
-                        GithubSsh = "git@github.com:trifenix/connect.git",
-                        pathPackageSettings="trifenix.connect.csproj"
-                    }
-
-
-                }
-
-        };
-
+        
         public static VersionStructure Cosmos => new VersionStructure
         {
             PackageName = "trifenix.connect.db.cosmos",
@@ -690,7 +657,7 @@ namespace trifenix.versions
         /// </summary>
         public static VersionStructure[] Packages { get; set; } = new VersionStructure[] {
 
-            Arguments, Connect,gitInterfaces, modelVersions, git , SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Exceptions, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
+            Arguments, Connect,gitInterfaces, modelVersions, git , SearchModel, Bus, Mdm, Mdmts,MdmNpm, Graph, Auth, Email, Interfaces, Translate, Cosmos, Connectsearch, Storage, External, agroData, AgroDataNuget, mdmcli
 
 
          };
